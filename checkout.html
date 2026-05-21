@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete Your Booking | Destination Fareways</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="checkout-page">
+    <header class="checkout-top">
+      <div class="checkout-container checkout-top-inner">
+        <a href="index.html" class="checkout-brand">
+          <i class="fa-solid fa-plane-departure"></i>
+          Destination<strong>Fareways</strong>
+        </a>
+        <nav class="checkout-steps" aria-label="Booking steps">
+          <span class="active">Trip Summary</span>
+          <span>Traveller Details</span>
+          <span>Payment</span>
+          <span>Confirmation</span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="checkout-shell">
+      <div class="checkout-container">
+        <h1 class="checkout-title">Complete your booking</h1>
+        <div class="checkout-grid">
+          <section class="trip-summary-card">
+            <div class="trip-main-card">
+              <div class="trip-route-head">
+                <div>
+                  <h2 id="coRoute">New York &rarr; Los Angeles</h2>
+                  <div class="trip-meta">
+                    <strong id="coDate">Thu, May 21, 2026</strong>
+                    <span id="coStops">Non stop</span>
+                    <span id="coDuration">5h 25m</span>
+                  </div>
+                </div>
+                <span class="fare-rule-badge">CANCELLATION FEES APPLY</span>
+              </div>
+
+              <div class="airline-line">
+                <div class="airline-logo-box al-delta" id="coLogo">DL</div>
+                <div>
+                  <strong id="coAirline">Delta Air Lines</strong>
+                  <span id="coFlight">DL 401</span>
+                </div>
+                <div class="economy-tag">Economy &gt; ECO VALUE</div>
+              </div>
+
+              <div class="timeline-box">
+                <div class="time-row">
+                  <strong id="coDepTime">06:00</strong>
+                  <div class="timeline-dot"></div>
+                  <div>
+                    <b id="coDepCity">New York</b>
+                    <p id="coDepAirport">John F. Kennedy International</p>
+                  </div>
+                </div>
+                <div class="duration-row">
+                  <span></span>
+                  <div class="timeline-line"></div>
+                  <p id="coMidDuration">5h 25m</p>
+                </div>
+                <div class="time-row">
+                  <strong id="coArrTime">09:20</strong>
+                  <div class="timeline-dot"></div>
+                  <div>
+                    <b id="coArrCity">Los Angeles</b>
+                    <p id="coArrAirport">Los Angeles International</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="baggage-row">
+                <span
+                  ><i class="fa-solid fa-suitcase-rolling"></i>
+                  <b>Cabin Baggage:</b> 7 Kgs / Adult</span
+                >
+                <span
+                  ><i class="fa-solid fa-bag-shopping"></i>
+                  <b>Check-In Baggage:</b> 15 Kgs / Adult</span
+                >
+              </div>
+            </div>
+
+            <div class="helper-strip">
+              <span
+                ><i class="fa-solid fa-suitcase"></i> Got excess baggage? Add
+                check-in baggage at discounted rates.</span
+              >
+              <button type="button">ADD BAGGAGE</button>
+            </div>
+
+            <section class="policy-card">
+              <h3>Cancellation &amp; Date Change Policy</h3>
+              <p>
+                Review airline fare rules before payment. Date changes and
+                cancellations may include airline fees and fare differences.
+              </p>
+            </section>
+          </section>
+
+          <aside class="fare-summary-card">
+            <h2>Fare Summary</h2>
+            <div class="fare-line">
+              <span><i class="fa-regular fa-square-plus"></i> Base Fare</span>
+              <strong id="coBaseFare">$189</strong>
+            </div>
+            <div class="fare-line">
+              <span
+                ><i class="fa-regular fa-square-plus"></i> Taxes and
+                Surcharges</span
+              >
+              <strong id="coTaxes">$38</strong>
+            </div>
+            <div class="fare-total">
+              <span>Total Amount</span>
+              <strong id="coTotal">$227</strong>
+            </div>
+            <div class="fare-alert">
+              Please review baggage allowance, cancellation policies and ticket
+              inclusions before booking.
+            </div>
+            <div class="coupon-box">
+              <h3>Coupons and Offers</h3>
+              <input type="text" placeholder="Enter coupon code" />
+            </div>
+            <button class="checkout-primary" onclick="goToTravellerDetails()">
+              Book Now
+            </button>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const selectedFlight = JSON.parse(
+        localStorage.getItem("dfSelectedFlight") || "null",
+      );
+      const searchData = JSON.parse(localStorage.getItem("dfSearch") || "{}");
+      const fallback = {
+        airline: "Delta Air Lines",
+        code: "DL",
+        flight: "DL 401",
+        dep: "06:00",
+        arr: "09:20",
+        depCity: "New York",
+        arrCity: "Los Angeles",
+        depApt: "JFK",
+        arrApt: "LAX",
+        dur: "5h 20m",
+        stopTxt: "Non stop",
+        price: 189,
+        logo: "al-delta",
+      };
+      const flight = selectedFlight || fallback;
+      const fromCity = (searchData.from || flight.depCity).split(",")[0];
+      const toCity = (searchData.to || flight.arrCity).split(",")[0];
+      const base = Number(flight.price || 189);
+      const taxes = Math.round(base * 0.2);
+      const total = base + taxes;
+
+      function setText(id, value) {
+        document.getElementById(id).textContent = value;
+      }
+
+      setText("coRoute", `${fromCity} \u2192 ${toCity}`);
+      setText("coDate", searchData.depDate || "Thu, May 21, 2026");
+      setText("coStops", flight.stopTxt || "Non stop");
+      setText("coDuration", flight.dur || "5h 20m");
+      setText("coAirline", flight.airline);
+      setText("coFlight", flight.flight);
+      setText("coDepTime", flight.dep);
+      setText("coArrTime", flight.arr);
+      setText("coDepCity", fromCity);
+      setText("coArrCity", toCity);
+      setText("coDepAirport", `${flight.depApt} Airport`);
+      setText("coArrAirport", `${flight.arrApt} Airport`);
+      setText("coMidDuration", flight.dur);
+      setText("coBaseFare", `$${base}`);
+      setText("coTaxes", `$${taxes}`);
+      setText("coTotal", `$${total}`);
+      const logo = document.getElementById("coLogo");
+      logo.textContent = flight.code || "DF";
+      logo.className = `airline-logo-box ${flight.logo || "al-delta"}`;
+
+      localStorage.setItem(
+        "dfCheckoutFare",
+        JSON.stringify({
+          base,
+          taxes,
+          total,
+          route: `${fromCity} to ${toCity}`,
+        }),
+      );
+
+      function goToTravellerDetails() {
+        window.location.href = "booking-details.html";
+      }
+    </script>
+  </body>
+</html>

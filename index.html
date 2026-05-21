@@ -181,6 +181,14 @@
        ===================================================== -->
     <section class="hero" id="hero">
       <div class="hero-overlay"></div>
+      <div class="mobile-hero-nav" aria-label="Mobile hero navigation">
+        <div class="container">
+          <a href="#hero" class="sticky-brand">
+            <i class="fa-solid fa-plane-departure"></i>
+            Destination<strong>Fareways</strong>
+          </a>
+        </div>
+      </div>
       <div class="container">
         <div class="hero-content" data-aos="fade-up" data-aos-duration="700">
           <div class="hero-badge">
@@ -212,6 +220,135 @@
               <i class="fa-solid fa-dollar-sign"></i
               ><span>Best Price Guaranteed</span>
             </div>
+          </div>
+
+          <div class="mobile-hero-card" aria-label="Search flights">
+            <div class="mh-trip-tabs">
+              <button
+                type="button"
+                class="mh-trip active"
+                onclick="switchMobileHeroTab(this, 'oneway')"
+              >
+                One way
+              </button>
+              <button
+                type="button"
+                class="mh-trip"
+                onclick="switchMobileHeroTab(this, 'roundtrip')"
+              >
+                Round trip
+              </button>
+            </div>
+
+            <div class="mh-route">
+              <div class="mh-cell">
+                <label class="mh-label" for="mhFromCity">From - DEL</label>
+                <input
+                  type="text"
+                  id="mhFromCity"
+                  class="mh-input mh-value"
+                  value="New Delhi"
+                  placeholder="From city"
+                />
+              </div>
+              <button
+                type="button"
+                class="mh-swap"
+                onclick="swapMobileHeroCities()"
+                aria-label="Swap departure and destination"
+              >
+                <i class="fa-solid fa-right-left"></i>
+              </button>
+              <div class="mh-cell mh-right">
+                <label class="mh-label" for="mhToCity">To - BOM</label>
+                <input
+                  type="text"
+                  id="mhToCity"
+                  class="mh-input mh-value mh-input-right"
+                  value="Mumbai"
+                  placeholder="To city"
+                />
+              </div>
+            </div>
+
+            <div class="mh-date-row">
+              <div class="mh-cell">
+                <label class="mh-label" for="mhDepDate">Departure</label>
+                <input
+                  type="text"
+                  id="mhDepDate"
+                  class="mh-input mh-value mh-date"
+                  placeholder="Select date"
+                  readonly
+                />
+              </div>
+              <div class="mh-cell mh-right">
+                <label class="mh-label" for="mhRetDate">Return</label>
+                <input
+                  type="text"
+                  id="mhRetDate"
+                  class="mh-input mh-muted mh-input-right"
+                  placeholder="Add for discounts"
+                  onclick="openMobileReturnDate(event)"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div
+              class="mh-full-row mh-pax-trigger"
+              onclick="toggleMobilePax(event)"
+            >
+              <div class="mh-label">Travellers &amp; Class</div>
+              <div class="mh-value mh-travel" id="mhPaxValue">
+                1 Adult, Economy
+              </div>
+              <div class="mh-pax-menu" id="mhPaxMenu" onclick="event.stopPropagation()">
+                <div class="mh-pax-item">
+                  <span>Adults</span>
+                  <div>
+                    <button type="button" onclick="updateMobilePax(event, 'adults', -1)">&#8722;</button>
+                    <strong id="mhAdultsNum">1</strong>
+                    <button type="button" onclick="updateMobilePax(event, 'adults', 1)">+</button>
+                  </div>
+                </div>
+                <div class="mh-pax-item">
+                  <span>Children</span>
+                  <div>
+                    <button type="button" onclick="updateMobilePax(event, 'children', -1)">&#8722;</button>
+                    <strong id="mhChildrenNum">0</strong>
+                    <button type="button" onclick="updateMobilePax(event, 'children', 1)">+</button>
+                  </div>
+                </div>
+                <div class="mh-pax-item">
+                  <span>Infants</span>
+                  <div>
+                    <button type="button" onclick="updateMobilePax(event, 'infants', -1)">&#8722;</button>
+                    <strong id="mhInfantsNum">0</strong>
+                    <button type="button" onclick="updateMobilePax(event, 'infants', 1)">+</button>
+                  </div>
+                </div>
+                <select id="mhCabinClass" class="mh-class-select" onchange="updateMobilePaxDisplay()">
+                  <option value="Economy">Economy</option>
+                  <option value="Premium Economy">Premium Economy</option>
+                  <option value="Business">Business Class</option>
+                  <option value="First">First Class</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mh-fares">
+              <div class="mh-label">Special fares (Optional)</div>
+              <div class="mh-chip-row">
+                <button type="button" class="mh-chip">Senior citizen</button>
+                <button type="button" class="mh-chip">Student</button>
+                <button type="button" class="mh-chip">Armed forces</button>
+              </div>
+            </div>
+
+            <button type="button" class="mh-search" onclick="searchMobileFlights()">
+              Search flights
+            </button>
           </div>
 
           <!-- SEARCH CARD -->
@@ -426,6 +563,29 @@
               </button>
             </div>
             <!-- /search-row -->
+
+            <button
+              type="button"
+              class="desktop-add-return"
+              id="desktopAddReturn"
+              onclick="openDesktopReturnDate()"
+            >
+              <span>Add a return date</span>
+              <small>Save more on round trips</small>
+            </button>
+
+            <div class="desktop-special-fares" aria-label="Special fares">
+              <div class="desktop-special-title">Special fares (Optional)</div>
+              <div class="desktop-fare-chips">
+                <button type="button" class="desktop-fare-chip">
+                  Senior citizen
+                </button>
+                <button type="button" class="desktop-fare-chip">Student</button>
+                <button type="button" class="desktop-fare-chip">
+                  Armed forces
+                </button>
+              </div>
+            </div>
 
             <!-- Multi-City Extra Rows -->
             <div class="multi-city-section" id="multiCitySection">
@@ -649,7 +809,7 @@
     <!-- =====================================================
        TRENDING DEALS
        ===================================================== -->
-    <section class="deals-section" id="deals">
+    <!-- <section class="deals-section" id="deals">
       <div class="container">
         <div class="section-head text-center" data-aos="fade-up">
           <div class="section-eyebrow">Limited Time</div>
@@ -761,12 +921,12 @@
           </a>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- =====================================================
        TOP DESTINATIONS
        ===================================================== -->
-    <section class="destinations-section" id="destinations">
+    <!-- <section class="destinations-section" id="destinations">
       <div class="container">
         <div class="section-head text-center" data-aos="fade-up">
           <div class="section-eyebrow">Explore America</div>
@@ -850,7 +1010,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- =====================================================
        WHY CHOOSE US
@@ -930,53 +1090,6 @@
                 The price you see is the price you pay. Fully transparent, no
                 surprise fees at checkout.
               </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================
-       CTA CALL BANNER
-       ===================================================== -->
-    <section class="cta-section" id="cheapest-month">
-      <div class="cta-dots" aria-hidden="true"></div>
-      <div class="container">
-        <div
-          class="row align-items-center gy-5"
-          style="position: relative; z-index: 1"
-        >
-          <div class="col-lg-7" data-aos="fade-right">
-            <div class="cta-tag">
-              <i class="fa-solid fa-headset"></i> Expert Flight Advisors
-            </div>
-            <h2 class="cta-title">Need Help Finding the Best Deal?</h2>
-            <p class="cta-sub">
-              Our USA Flight Experts Are Ready to Assist You!
-            </p>
-            <p class="cta-hours">
-              <i class="fa-regular fa-clock"></i> Mon&ndash;Sun &middot;
-              8AM&ndash;11PM EST &middot; No wait times
-            </p>
-          </div>
-
-          <div class="col-lg-5" data-aos="fade-left">
-            <div class="cta-phone">
-              <i class="fa-solid fa-phone-volume"></i>
-              <a href="tel:+18551234567">+1-855-123-4567</a>
-            </div>
-            <div class="cta-actions">
-              <a href="tel:+18551234567" class="btn-cta-primary">
-                <i class="fa-solid fa-phone"></i> Call Now
-              </a>
-              <a
-                href="https://wa.me/18551234567"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-cta-outline"
-              >
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
-              </a>
             </div>
           </div>
         </div>
@@ -1120,7 +1233,7 @@
     <!-- =====================================================
        FAQ
        ===================================================== -->
-    <section class="faq-section" id="faq">
+    <!-- <section class="faq-section" id="faq">
       <div class="container">
         <div class="section-head text-center" data-aos="fade-up">
           <div class="section-eyebrow">Got Questions?</div>
@@ -1290,6 +1403,53 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- =====================================================
+       CTA CALL BANNER
+       ===================================================== -->
+    <section class="cta-section" id="cheapest-month">
+      <div class="cta-dots" aria-hidden="true"></div>
+      <div class="container">
+        <div
+          class="row align-items-center gy-5"
+          style="position: relative; z-index: 1"
+        >
+          <div class="col-lg-7" data-aos="fade-right">
+            <div class="cta-tag">
+              <i class="fa-solid fa-headset"></i> Expert Flight Advisors
+            </div>
+            <h2 class="cta-title">Need Help Finding the Best Deal?</h2>
+            <p class="cta-sub">
+              Our USA Flight Experts Are Ready to Assist You!
+            </p>
+            <p class="cta-hours">
+              <i class="fa-regular fa-clock"></i> Mon&ndash;Sun &middot;
+              8AM&ndash;11PM EST &middot; No wait times
+            </p>
+          </div>
+
+          <div class="col-lg-5" data-aos="fade-left">
+            <div class="cta-phone">
+              <i class="fa-solid fa-phone-volume"></i>
+              <a href="tel:+18551234567">+1-855-123-4567</a>
+            </div>
+            <div class="cta-actions">
+              <a href="tel:+18551234567" class="btn-cta-primary">
+                <i class="fa-solid fa-phone"></i> Call Now
+              </a>
+              <a
+                href="https://wa.me/18551234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-cta-outline"
+              >
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -1591,15 +1751,34 @@
 
       /* ── STICKY NAV ──────────────────── */
       const stickyNav = document.getElementById("stickyNav");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 80) {
+      const floatCall = document.getElementById("floatCall");
+      const heroSection = document.getElementById("hero");
+      const mobileNavQuery = window.matchMedia("(max-width: 767px)");
+
+      function updateScrollUi() {
+        const heroBottom =
+          heroSection.offsetTop + heroSection.offsetHeight - 12;
+        const isPastHero = window.scrollY > heroBottom;
+
+        if (mobileNavQuery.matches) {
+          stickyNav.classList.toggle("visible", isPastHero);
+          stickyNav.classList.remove("hero-mobile");
+        } else if (window.scrollY > 80) {
           stickyNav.classList.add("visible");
+          stickyNav.classList.remove("hero-mobile");
         } else {
           stickyNav.classList.remove("visible");
+          stickyNav.classList.remove("hero-mobile");
         }
         const backTop = document.getElementById("backTop");
         backTop.classList.toggle("show", window.scrollY > 400);
-      });
+
+        floatCall.classList.toggle("show", isPastHero);
+      }
+
+      window.addEventListener("scroll", updateScrollUi);
+      window.addEventListener("resize", updateScrollUi);
+      updateScrollUi();
 
       /* ── SCROLL TO HERO ──────────────── */
       function scrollToHero(e) {
@@ -1611,6 +1790,13 @@
 
       /* ── SEARCH TABS ─────────────────── */
       let currentTab = "oneway";
+      function updateDesktopAddReturn() {
+        const addReturn = document.getElementById("desktopAddReturn");
+        if (addReturn) {
+          addReturn.classList.toggle("hidden", currentTab !== "oneway");
+        }
+      }
+
       function switchTab(el, tab) {
         document
           .querySelectorAll(".s-tab")
@@ -1629,6 +1815,7 @@
           retWrap.classList.remove("hidden");
           multiSec.style.display = "block";
         }
+        updateDesktopAddReturn();
       }
 
       function switchTabMobile(tab) {
@@ -1645,6 +1832,7 @@
           retWrap.classList.remove("hidden");
           multiSec.style.display = "block";
         }
+        updateDesktopAddReturn();
       }
 
       function openReturnDate() {
@@ -1652,6 +1840,13 @@
           .querySelectorAll(".s-tab")
           .forEach((t) => t.classList.remove("active"));
         document.querySelectorAll(".s-tab")[1].classList.add("active");
+        switchTabMobile("roundtrip");
+      }
+
+      function openDesktopReturnDate() {
+        const tabs = document.querySelectorAll(".s-tab");
+        tabs.forEach((t) => t.classList.remove("active"));
+        if (tabs[1]) tabs[1].classList.add("active");
         switchTabMobile("roundtrip");
       }
 
@@ -1667,6 +1862,160 @@
         minDate: "today",
         dateFormat: "M j, Y",
       });
+      function formatMobileDate(date) {
+        return flatpickr.formatDate(date, "D, d M");
+      }
+
+      function formatDesktopDate(date) {
+        return flatpickr.formatDate(date, "M j, Y");
+      }
+
+      const mhDepPicker = flatpickr("#mhDepDate", {
+        minDate: "today",
+        dateFormat: "D, d M",
+        disableMobile: true,
+        onChange(sel) {
+          if (!sel[0]) return;
+          document.getElementById("mhDepDate").value = formatMobileDate(sel[0]);
+          if (mhRetPicker) mhRetPicker.set("minDate", sel[0]);
+        },
+      });
+      const mhRetPicker = flatpickr("#mhRetDate", {
+        minDate: "today",
+        dateFormat: "D, d M",
+        disableMobile: true,
+        onChange(sel) {
+          if (sel[0]) {
+            document.getElementById("mhRetDate").value =
+              formatMobileDate(sel[0]);
+          }
+        },
+      });
+      const today = new Date();
+      mhDepPicker.setDate(today, true);
+      document.getElementById("mhRetDate").value = "";
+      document.getElementById("mhRetDate").placeholder = "Add a return date";
+
+      function applyMobileHeroDefaults() {
+        if (!window.matchMedia("(max-width: 767px)").matches) return;
+        const defaults = [
+          ["fromCity", "New Delhi"],
+          ["toCity", "Mumbai"],
+          ["depDate", formatDesktopDate(today)],
+        ];
+        defaults.forEach(([id, value]) => {
+          const field = document.getElementById(id);
+          if (field && !field.value.trim()) field.value = value;
+        });
+      }
+
+      applyMobileHeroDefaults();
+      updateDesktopAddReturn();
+
+      const mobilePaxData = { adults: 1, children: 0, infants: 0 };
+
+      function switchMobileHeroTab(el, tab) {
+        document
+          .querySelectorAll(".mh-trip")
+          .forEach((btn) => btn.classList.remove("active"));
+        el.classList.add("active");
+        switchTabMobile(tab);
+        if (tab === "roundtrip") {
+          document.getElementById("mhRetDate").placeholder = "Select date";
+        } else {
+          document.getElementById("mhRetDate").value = "";
+          document.getElementById("mhRetDate").placeholder =
+            "Add for discounts";
+        }
+      }
+
+      function openMobileReturnDate(event) {
+        if (currentTab === "roundtrip") return;
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+        }
+        const trips = document.querySelectorAll(".mh-trip");
+        trips.forEach((btn) => btn.classList.remove("active"));
+        if (trips[1]) trips[1].classList.add("active");
+        switchTabMobile("roundtrip");
+        const retInput = document.getElementById("mhRetDate");
+        retInput.placeholder = "Select date";
+      }
+
+      document
+        .getElementById("mhRetDate")
+        .addEventListener("click", openMobileReturnDate, true);
+
+      function swapMobileHeroCities() {
+        const from = document.getElementById("mhFromCity");
+        const to = document.getElementById("mhToCity");
+        const temp = from.value;
+        from.value = to.value;
+        to.value = temp;
+      }
+
+      function toggleMobilePax(e) {
+        e.stopPropagation();
+        document.getElementById("mhPaxMenu").classList.toggle("open");
+      }
+
+      function updateMobilePax(e, type, delta) {
+        e.stopPropagation();
+        mobilePaxData[type] = Math.max(
+          type === "adults" ? 1 : 0,
+          mobilePaxData[type] + delta,
+        );
+        document.getElementById("mhAdultsNum").textContent =
+          mobilePaxData.adults;
+        document.getElementById("mhChildrenNum").textContent =
+          mobilePaxData.children;
+        document.getElementById("mhInfantsNum").textContent =
+          mobilePaxData.infants;
+        updateMobilePaxDisplay();
+      }
+
+      function updateMobilePaxDisplay() {
+        const total =
+          mobilePaxData.adults +
+          mobilePaxData.children +
+          mobilePaxData.infants;
+        const cls = document.getElementById("mhCabinClass").value;
+        document.getElementById("mhPaxValue").textContent =
+          `${total} Adult${total > 1 ? "s" : ""}, ${cls}`;
+      }
+
+      function syncMobileHeroToDesktop() {
+        const from = document.getElementById("mhFromCity").value.trim();
+        const to = document.getElementById("mhToCity").value.trim();
+        const dep =
+          mhDepPicker.selectedDates[0]
+            ? formatDesktopDate(mhDepPicker.selectedDates[0])
+            : formatDesktopDate(today);
+        const ret =
+          mhRetPicker.selectedDates[0]
+            ? formatDesktopDate(mhRetPicker.selectedDates[0])
+            : "";
+        document.getElementById("fromCity").value = from;
+        document.getElementById("toCity").value = to;
+        document.getElementById("depDate").value = dep;
+        document.getElementById("retDate").value = ret;
+        paxData.adults = mobilePaxData.adults;
+        paxData.children = mobilePaxData.children;
+        paxData.infants = mobilePaxData.infants;
+        document.getElementById("adultsNum").textContent = paxData.adults;
+        document.getElementById("childrenNum").textContent = paxData.children;
+        document.getElementById("infantsNum").textContent = paxData.infants;
+        document.getElementById("cabinClass").value =
+          document.getElementById("mhCabinClass").value;
+        updatePaxDisplay();
+      }
+
+      function searchMobileFlights() {
+        syncMobileHeroToDesktop();
+        doSearch();
+      }
 
       /* ── SWAP CITIES ─────────────────── */
       function swapCities() {
@@ -1699,10 +2048,11 @@
         const total = paxData.adults + paxData.children + paxData.infants;
         const cls = document.getElementById("cabinClass").value;
         document.getElementById("paxValue").textContent =
-          `${total} Passenger${total > 1 ? "s" : ""} · ${cls}`;
+          `${total} Adult${total > 1 ? "s" : ""}, ${cls}`;
       }
       document.addEventListener("click", () => {
         document.getElementById("paxMenu").classList.remove("open");
+        document.getElementById("mhPaxMenu").classList.remove("open");
       });
 
       /* ── SEARCH ──────────────────────── */

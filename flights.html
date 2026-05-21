@@ -1,585 +1,1051 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cheap Flights — Search Results | Destination Fareways</title>
-  <meta name="description" content="Find the cheapest flights with Destination Fareways. Compare hundreds of airlines, filter by price, stops, departure time, and more.">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="geo.region" content="US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cheap Flights — Search Results | Destination Fareways</title>
+    <meta
+      name="description"
+      content="Find the cheapest flights with Destination Fareways. Compare hundreds of airlines, filter by price, stops, departure time, and more."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="geo.region" content="US" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="flights-page">
-
-  <!-- ══════════════ STICKY NAV (mobile / always-visible) ══════════════ -->
-  <nav class="sticky-nav visible" id="stickyNav" role="navigation">
-    <div class="container">
-      <div class="sticky-nav-inner">
-        <a href="home.html" class="sticky-brand">
-          <i class="fa-solid fa-plane-departure"></i>
-          Destination<strong>Fareways</strong>
-        </a>
-        <div class="sticky-links">
-          <a href="home.html" class="sticky-link">Search Flights</a>
-          <a href="home.html#deals" class="sticky-link">Deals</a>
-          <a href="home.html#destinations" class="sticky-link">Destinations</a>
-          <a href="home.html#faq" class="sticky-link">FAQs</a>
-          <a href="about.html" class="sticky-link">About</a>
-          <a href="contact.html" class="sticky-link">Contact</a>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="flights-page">
+    <!-- ══════════════ STICKY NAV (mobile / always-visible) ══════════════ -->
+    <nav class="sticky-nav visible" id="stickyNav" role="navigation">
+      <div class="container">
+        <div class="sticky-nav-inner">
+          <a href="index.html" class="sticky-brand">
+            <i class="fa-solid fa-plane-departure"></i>
+            Destination<strong>Fareways</strong>
+          </a>
+          <div class="sticky-links">
+            <a href="index.html" class="sticky-link">Search Flights</a>
+            <a href="index.html#deals" class="sticky-link">Deals</a>
+            <a href="index.html#destinations" class="sticky-link"
+              >Destinations</a
+            >
+            <a href="index.html#faq" class="sticky-link">FAQs</a>
+            <a href="about.html" class="sticky-link">About</a>
+            <a href="contact.html" class="sticky-link">Contact</a>
+          </div>
+          <!-- no Book Now button on flights page -->
         </div>
-        <!-- no Book Now button on flights page -->
+      </div>
+    </nav>
+
+    <!-- ══════════════ DESKTOP SEARCH BAR ══════════════ -->
+    <div class="flights-search-bar">
+      <div class="fsb-inner">
+        <div class="fsb-row">
+          <div class="fsb-field fsb-trip-type">
+            <div class="fsb-label">TRIP TYPE</div>
+            <div class="fsb-trip-val" id="fsbTripType">
+              One Way
+              <i
+                class="fa-solid fa-chevron-down"
+                style="font-size: 0.65rem"
+              ></i>
+            </div>
+          </div>
+
+          <div class="fsb-field">
+            <div class="fsb-label">FROM</div>
+            <div class="fsb-city" id="fsbFromCity">New York, USA</div>
+            <div class="fsb-code" id="fsbFromCode">
+              JFK — John F. Kennedy International
+            </div>
+          </div>
+
+          <button class="fsb-swap" title="Swap cities" onclick="fsbSwap()">
+            <i class="fa-solid fa-right-left"></i>
+          </button>
+
+          <div class="fsb-field">
+            <div class="fsb-label">TO</div>
+            <div class="fsb-city" id="fsbToCity">Los Angeles, USA</div>
+            <div class="fsb-code" id="fsbToCode">
+              LAX — Los Angeles International
+            </div>
+          </div>
+
+          <div class="fsb-field">
+            <div class="fsb-label">DEPART</div>
+            <div class="fsb-date-main" id="fsbDepartMain">
+              Thu, May 21, 2026
+            </div>
+            <div class="fsb-date-day" id="fsbDepartDay">Thursday</div>
+          </div>
+
+          <div class="fsb-field">
+            <div class="fsb-label">RETURN</div>
+            <div class="fsb-date-main fsb-dim">Select Return</div>
+            <div class="fsb-date-day fsb-dim">Add return date</div>
+          </div>
+
+          <div class="fsb-field">
+            <div class="fsb-label">PASSENGERS &amp; CLASS</div>
+            <div class="fsb-pax-val" id="fsbPax">1 Adult, Economy</div>
+            <div class="fsb-code">&nbsp;</div>
+          </div>
+
+          <button
+            class="fsb-search-btn"
+            onclick="window.location.href = 'index.html'"
+          >
+            SEARCH
+          </button>
+        </div>
+        <!-- /fsb-row -->
+
+        <div class="fare-type-row">
+          <span class="fare-type-label">Fare Type:</span>
+          <label class="fare-type-opt ft-active" onclick="setFareType(this)"
+            ><input type="radio" name="fareType" checked /> Regular</label
+          >
+          <label class="fare-type-opt" onclick="setFareType(this)"
+            ><input type="radio" name="fareType" /> Student</label
+          >
+          <label class="fare-type-opt" onclick="setFareType(this)"
+            ><input type="radio" name="fareType" /> Armed Forces</label
+          >
+          <label class="fare-type-opt" onclick="setFareType(this)"
+            ><input type="radio" name="fareType" /> Senior Citizen</label
+          >
+          <label class="fare-type-opt" onclick="setFareType(this)"
+            ><input type="radio" name="fareType" /> Military</label
+          >
+        </div>
       </div>
     </div>
-  </nav>
 
-  <!-- ══════════════ DESKTOP SEARCH BAR ══════════════ -->
-  <div class="flights-search-bar">
-    <div class="fsb-inner">
-      <div class="fsb-row">
+    <!-- ══════════════ MOBILE SEARCH SUMMARY (below sticky nav) ══════════════ -->
+    <div class="flights-mobile-summary" id="flightsMobileSummary">
+      <div class="fms-route" id="fmsMobileRoute">JFK &rarr; LAX</div>
+      <div class="fms-details" id="fmsMobileDetails">
+        May 21 &middot; 1 Adult &middot; Economy
+      </div>
+      <button class="fms-edit" onclick="window.location.href = 'index.html'">
+        <i class="fa-solid fa-pen-to-square"></i> Edit
+      </button>
+    </div>
 
-        <div class="fsb-field fsb-trip-type">
-          <div class="fsb-label">TRIP TYPE</div>
-          <div class="fsb-trip-val" id="fsbTripType">One Way <i class="fa-solid fa-chevron-down" style="font-size:0.65rem"></i></div>
-        </div>
-
-        <div class="fsb-field">
-          <div class="fsb-label">FROM</div>
-          <div class="fsb-city" id="fsbFromCity">New York, USA</div>
-          <div class="fsb-code" id="fsbFromCode">JFK — John F. Kennedy International</div>
-        </div>
-
-        <button class="fsb-swap" title="Swap cities" onclick="fsbSwap()">
-          <i class="fa-solid fa-right-left"></i>
+    <!-- ══════════════ MOBILE FILTER BAR ══════════════ -->
+    <div class="filter-toggle-bar">
+      <button class="filter-toggle-btn" onclick="openFilters()">
+        <i class="fa-solid fa-sliders"></i> Filters
+      </button>
+      <div class="results-sort-pills">
+        <button
+          class="sort-pill active"
+          onclick="sortFlights('cheapest', this)"
+        >
+          Cheapest
         </button>
-
-        <div class="fsb-field">
-          <div class="fsb-label">TO</div>
-          <div class="fsb-city" id="fsbToCity">Los Angeles, USA</div>
-          <div class="fsb-code" id="fsbToCode">LAX — Los Angeles International</div>
-        </div>
-
-        <div class="fsb-field">
-          <div class="fsb-label">DEPART</div>
-          <div class="fsb-date-main" id="fsbDepartMain">Thu, May 21, 2026</div>
-          <div class="fsb-date-day" id="fsbDepartDay">Thursday</div>
-        </div>
-
-        <div class="fsb-field">
-          <div class="fsb-label">RETURN</div>
-          <div class="fsb-date-main fsb-dim">Select Return</div>
-          <div class="fsb-date-day fsb-dim">Add return date</div>
-        </div>
-
-        <div class="fsb-field">
-          <div class="fsb-label">PASSENGERS &amp; CLASS</div>
-          <div class="fsb-pax-val" id="fsbPax">1 Adult, Economy</div>
-          <div class="fsb-code">&nbsp;</div>
-        </div>
-
-        <button class="fsb-search-btn" onclick="window.location.href='home.html'">SEARCH</button>
-
-      </div><!-- /fsb-row -->
-
-      <div class="fare-type-row">
-        <span class="fare-type-label">Fare Type:</span>
-        <label class="fare-type-opt ft-active" onclick="setFareType(this)"><input type="radio" name="fareType" checked> Regular</label>
-        <label class="fare-type-opt" onclick="setFareType(this)"><input type="radio" name="fareType"> Student</label>
-        <label class="fare-type-opt" onclick="setFareType(this)"><input type="radio" name="fareType"> Armed Forces</label>
-        <label class="fare-type-opt" onclick="setFareType(this)"><input type="radio" name="fareType"> Senior Citizen</label>
-        <label class="fare-type-opt" onclick="setFareType(this)"><input type="radio" name="fareType"> Military</label>
+        <button class="sort-pill" onclick="sortFlights('nonstop', this)">
+          Non Stop
+        </button>
+        <button class="sort-pill" onclick="sortFlights('preferred', this)">
+          Recommended
+        </button>
+        <button class="sort-pill" onclick="sortFlights('depart', this)">
+          Early Depart
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- ══════════════ MOBILE SEARCH SUMMARY (below sticky nav) ══════════════ -->
-  <div class="flights-mobile-summary" id="flightsMobileSummary">
-    <div class="fms-route" id="fmsMobileRoute">JFK &rarr; LAX</div>
-    <div class="fms-details" id="fmsMobileDetails">May 21 &middot; 1 Adult &middot; Economy</div>
-    <button class="fms-edit" onclick="window.location.href='home.html'">
-      <i class="fa-solid fa-pen-to-square"></i> Edit
+    <!-- Filter overlay -->
+    <div
+      class="filter-overlay"
+      id="filterOverlay"
+      onclick="closeFilters()"
+    ></div>
+    <!-- Close button (shown inside sidebar on mobile) -->
+    <button
+      class="close-filters-btn"
+      id="closeFilterBtn"
+      onclick="closeFilters()"
+    >
+      <i class="fa-solid fa-xmark"></i>
     </button>
-  </div>
 
-  <!-- ══════════════ MOBILE FILTER BAR ══════════════ -->
-  <div class="filter-toggle-bar">
-    <button class="filter-toggle-btn" onclick="openFilters()">
-      <i class="fa-solid fa-sliders"></i> Filters
-    </button>
-    <div class="results-sort-pills">
-      <button class="sort-pill active" onclick="sortFlights('cheapest',this)">Cheapest</button>
-      <button class="sort-pill" onclick="sortFlights('nonstop',this)">Non Stop</button>
-      <button class="sort-pill" onclick="sortFlights('preferred',this)">Recommended</button>
-      <button class="sort-pill" onclick="sortFlights('depart',this)">Early Depart</button>
+    <!-- ══════════════ MAIN LAYOUT ══════════════ -->
+    <div class="flights-page-body">
+      <div class="flights-layout">
+        <!-- ── SIDEBAR FILTERS ── -->
+        <aside class="filters-sidebar" id="filtersSidebar">
+          <!-- Popular Filters -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">Popular Filters</div>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="popNonstop"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Non Stop</span>
+              </div>
+              <span class="filter-check-price">$129</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="popSpirit"
+                  data-airline="Spirit Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Spirit Airlines</span>
+              </div>
+              <span class="filter-check-price">$129</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="popJetblue"
+                  data-airline="JetBlue Airways"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">JetBlue Airways</span>
+              </div>
+              <span class="filter-check-price">$159</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="popDelta"
+                  data-airline="Delta Air Lines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Delta Air Lines</span>
+              </div>
+              <span class="filter-check-price">$189</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="popAmerican"
+                  data-airline="American Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">American Airlines</span>
+              </div>
+              <span class="filter-check-price">$165</span>
+            </label>
+          </div>
+
+          <!-- Price Range -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">One Way Price</div>
+            <div class="price-range-wrap">
+              <input
+                type="range"
+                class="price-range-input"
+                id="priceRange"
+                min="100"
+                max="300"
+                value="300"
+                oninput="onPriceRange(this)"
+              />
+              <div class="price-range-labels">
+                <span>$100</span>
+                <span id="priceRangeVal">Up to $300</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stops -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">Stops</div>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  id="stopNonstop"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Non Stop</span>
+              </div>
+              <span class="filter-check-price">$129</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" id="stop1" onchange="applyFilters()" />
+                <span class="filter-check-name">1 Stop</span>
+              </div>
+              <span class="filter-check-price">$119</span>
+            </label>
+          </div>
+
+          <!-- Departure Time -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">
+              Departure from <span id="depCityShort">New York</span>
+            </div>
+            <div class="time-slot-grid">
+              <button
+                class="time-slot-btn"
+                data-range="0-6"
+                onclick="toggleTimeSlot(this, 'dep')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-moon"></i
+                ></span>
+                <span class="time-slot-label">Before<br />6 am</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="6-12"
+                onclick="toggleTimeSlot(this, 'dep')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-sun"></i
+                ></span>
+                <span class="time-slot-label">6 am –<br />12 pm</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="12-18"
+                onclick="toggleTimeSlot(this, 'dep')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-cloud-sun"></i
+                ></span>
+                <span class="time-slot-label">12 pm –<br />6 pm</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="18-24"
+                onclick="toggleTimeSlot(this, 'dep')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-moon"></i
+                ></span>
+                <span class="time-slot-label">After<br />6 pm</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Arrival Time -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">
+              Arrival at <span id="arrCityShort">Los Angeles</span>
+            </div>
+            <div class="time-slot-grid">
+              <button
+                class="time-slot-btn"
+                data-range="0-6"
+                onclick="toggleTimeSlot(this, 'arr')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-moon"></i
+                ></span>
+                <span class="time-slot-label">Before<br />6 am</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="6-12"
+                onclick="toggleTimeSlot(this, 'arr')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-sun"></i
+                ></span>
+                <span class="time-slot-label">6 am –<br />12 pm</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="12-18"
+                onclick="toggleTimeSlot(this, 'arr')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-cloud-sun"></i
+                ></span>
+                <span class="time-slot-label">12 pm –<br />6 pm</span>
+              </button>
+              <button
+                class="time-slot-btn"
+                data-range="18-24"
+                onclick="toggleTimeSlot(this, 'arr')"
+              >
+                <span class="time-slot-icon"
+                  ><i class="fa-solid fa-moon"></i
+                ></span>
+                <span class="time-slot-label">After<br />6 pm</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Departure Airports -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">Departure Airports</div>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" checked onchange="applyFilters()" />
+                <span class="filter-check-name">John F. Kennedy (JFK)</span>
+              </div>
+              <span class="filter-check-price">$119</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" onchange="applyFilters()" />
+                <span class="filter-check-name">LaGuardia (LGA)</span>
+              </div>
+              <span class="filter-check-price">$135</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" onchange="applyFilters()" />
+                <span class="filter-check-name">Newark Liberty (EWR)</span>
+              </div>
+              <span class="filter-check-price">$125</span>
+            </label>
+          </div>
+
+          <!-- Arrival Airports -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">Arrival Airports</div>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" checked onchange="applyFilters()" />
+                <span class="filter-check-name">Los Angeles Intl (LAX)</span>
+              </div>
+              <span class="filter-check-price">$119</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" onchange="applyFilters()" />
+                <span class="filter-check-name">Burbank (BUR)</span>
+              </div>
+              <span class="filter-check-price">$139</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input type="checkbox" onchange="applyFilters()" />
+                <span class="filter-check-name">Long Beach (LGB)</span>
+              </div>
+              <span class="filter-check-price">$129</span>
+            </label>
+          </div>
+
+          <!-- Airlines -->
+          <div class="filter-panel">
+            <div class="filter-panel-title">Airlines</div>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="Delta Air Lines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Delta Air Lines</span>
+              </div>
+              <span class="filter-check-price">$189</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="American Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">American Airlines</span>
+              </div>
+              <span class="filter-check-price">$165</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="JetBlue Airways"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">JetBlue Airways</span>
+              </div>
+              <span class="filter-check-price">$159</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="United Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">United Airlines</span>
+              </div>
+              <span class="filter-check-price">$142</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="Spirit Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Spirit Airlines</span>
+              </div>
+              <span class="filter-check-price">$129</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="Alaska Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Alaska Airlines</span>
+              </div>
+              <span class="filter-check-price">$219</span>
+            </label>
+            <label class="filter-check-item">
+              <div class="filter-check-left">
+                <input
+                  type="checkbox"
+                  data-airline="Frontier Airlines"
+                  onchange="applyFilters()"
+                />
+                <span class="filter-check-name">Frontier Airlines</span>
+              </div>
+              <span class="filter-check-price">$119</span>
+            </label>
+          </div>
+        </aside>
+        <!-- /filters-sidebar -->
+
+        <!-- ── RESULTS MAIN ── -->
+        <main class="results-main">
+          <div class="results-header">
+            <h1 class="results-title" id="resultsTitle">
+              Flights from New York to Los Angeles
+            </h1>
+            <div class="results-sub" id="resultsSub">
+              Thursday, May 21, 2026 &middot; 1 Adult &middot; Economy
+            </div>
+          </div>
+
+          <div class="promo-banner">
+            <div class="promo-icon"><i class="fa-solid fa-tag"></i></div>
+            <div>
+              <div class="promo-text">
+                Save up to $50 with our exclusive member fares
+              </div>
+              <div class="promo-sub">
+                Use code <strong>FAREWAYS50</strong> at checkout &middot;
+                Limited time offer
+              </div>
+            </div>
+          </div>
+
+          <div class="date-strip-wrap">
+            <!-- Date strip -->
+            <div class="date-strip-container">
+              <button
+                class="date-strip-arrow ds-prev"
+                onclick="scrollDateStrip(-1)"
+                aria-label="Previous dates"
+              >
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <div class="date-strip" id="dateStrip"></div>
+              <button
+                class="date-strip-arrow ds-next"
+                onclick="scrollDateStrip(1)"
+                aria-label="Next dates"
+              >
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <!-- Sort tabs -->
+            <div class="sort-tabs" id="sortTabs">
+              <div
+                class="sort-tab active"
+                onclick="sortFlights('cheapest', this)"
+              >
+                <div class="sort-tab-icon">
+                  <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <div>
+                  <div class="sort-tab-name">CHEAPEST</div>
+                  <div class="sort-tab-price" id="stCheap">
+                    $119 &middot; 8h 45m
+                  </div>
+                </div>
+              </div>
+              <div class="sort-tab" onclick="sortFlights('nonstop', this)">
+                <div class="sort-tab-icon" style="background: #7c3aed">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <div class="sort-tab-name">NON STOP FIRST</div>
+                  <div class="sort-tab-price" id="stNonstop">
+                    $129 &middot; 5h 20m
+                  </div>
+                </div>
+              </div>
+              <div class="sort-tab" onclick="sortFlights('preferred', this)">
+                <div class="sort-tab-icon" style="background: #f59e0b">
+                  <i class="fa-regular fa-star"></i>
+                </div>
+                <div>
+                  <div class="sort-tab-name">YOU MAY PREFER</div>
+                  <div class="sort-tab-price" id="stPrefer">
+                    $179 &middot; 5h 25m
+                  </div>
+                </div>
+              </div>
+              <div class="sort-tab" onclick="sortFlights('depart', this)">
+                <div class="sort-tab-icon" style="background: #6b7280">
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                  <div class="sort-tab-name">DEPART EARLY</div>
+                  <div class="sort-tab-price"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="results-count-bar" id="resultsCountBar">
+              Flights sorted by Lowest fares on this route
+            </div>
+
+            <div class="flight-cards" id="flightCards"></div>
+
+            <div class="no-results-msg" id="noResultsMsg" style="display: none">
+              <i class="fa-solid fa-plane-circle-xmark"></i>
+              <p>No flights match your current filters.</p>
+              <button onclick="resetFilters()">Clear All Filters</button>
+            </div>
+          </div>
+          <!-- /date-strip-wrap -->
+        </main>
+      </div>
     </div>
-  </div>
 
-  <!-- Filter overlay -->
-  <div class="filter-overlay" id="filterOverlay" onclick="closeFilters()"></div>
-  <!-- Close button (shown inside sidebar on mobile) -->
-  <button class="close-filters-btn" id="closeFilterBtn" onclick="closeFilters()">
-    <i class="fa-solid fa-xmark"></i>
-  </button>
+    <!-- Floating call button -->
+    <a href="tel:+18551234567" class="float-call" aria-label="Call us">
+      <i class="fa-solid fa-phone"></i><span>Call Now</span>
+    </a>
 
-  <!-- ══════════════ MAIN LAYOUT ══════════════ -->
-  <div class="flights-page-body">
-    <div class="flights-layout">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ── Flight Data ── */
+      const ALL_FLIGHTS = [
+        {
+          id: 1,
+          airline: "Frontier Airlines",
+          code: "F9",
+          flight: "F9 201",
+          logo: "al-frontier",
+          dep: "07:00",
+          depH: 7,
+          arr: "12:45",
+          arrH: 12,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "8h 45m",
+          stops: 1,
+          stopTxt: "1 Stop (DEN)",
+          price: 119,
+          ontime: "72% on time",
+          deal: "Save $20 with code FAREWAYS20",
+        },
+        {
+          id: 2,
+          airline: "Spirit Airlines",
+          code: "NK",
+          flight: "NK 701",
+          logo: "al-spirit",
+          dep: "06:50",
+          depH: 6,
+          arr: "10:15",
+          arrH: 10,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 25m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 129,
+          ontime: "78% on time",
+          deal: null,
+        },
+        {
+          id: 3,
+          airline: "United Airlines",
+          code: "UA",
+          flight: "UA 289",
+          logo: "al-united",
+          dep: "07:45",
+          depH: 7,
+          arr: "13:20",
+          arrH: 13,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "8h 35m",
+          stops: 1,
+          stopTxt: "1 Stop (ORD)",
+          price: 142,
+          ontime: "81% on time",
+          deal: "Members-only fare — Sign up to save",
+        },
+        {
+          id: 4,
+          airline: "American Airlines",
+          code: "AA",
+          flight: "AA 789",
+          logo: "al-american",
+          dep: "14:00",
+          depH: 14,
+          arr: "19:30",
+          arrH: 19,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "8h 30m",
+          stops: 1,
+          stopTxt: "1 Stop (DFW)",
+          price: 165,
+          ontime: "79% on time",
+          deal: null,
+        },
+        {
+          id: 5,
+          airline: "JetBlue Airways",
+          code: "B6",
+          flight: "B6 603",
+          logo: "al-jetblue",
+          dep: "20:30",
+          depH: 20,
+          arr: "23:55",
+          arrH: 23,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 25m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 159,
+          ontime: "83% on time",
+          deal: null,
+        },
+        {
+          id: 6,
+          airline: "JetBlue Airways",
+          code: "B6",
+          flight: "B6 501",
+          logo: "al-jetblue",
+          dep: "10:15",
+          depH: 10,
+          arr: "13:40",
+          arrH: 13,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 25m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 179,
+          ontime: "84% on time",
+          deal: "Save $25 with code FAREWAYS25",
+        },
+        {
+          id: 7,
+          airline: "Delta Air Lines",
+          code: "DL",
+          flight: "DL 401",
+          logo: "al-delta",
+          dep: "06:00",
+          depH: 6,
+          arr: "09:20",
+          arrH: 9,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 20m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 189,
+          ontime: "88% on time",
+          deal: null,
+        },
+        {
+          id: 8,
+          airline: "American Airlines",
+          code: "AA",
+          flight: "AA 123",
+          logo: "al-american",
+          dep: "08:30",
+          depH: 8,
+          arr: "11:55",
+          arrH: 11,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 25m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 205,
+          ontime: "82% on time",
+          deal: null,
+        },
+        {
+          id: 9,
+          airline: "Alaska Airlines",
+          code: "AS",
+          flight: "AS 301",
+          logo: "al-alaska",
+          dep: "11:30",
+          depH: 11,
+          arr: "15:10",
+          arrH: 15,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 40m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 219,
+          ontime: "86% on time",
+          deal: null,
+        },
+        {
+          id: 10,
+          airline: "Delta Air Lines",
+          code: "DL",
+          flight: "DL 567",
+          logo: "al-delta",
+          dep: "18:00",
+          depH: 18,
+          arr: "21:20",
+          arrH: 21,
+          depApt: "JFK",
+          arrApt: "LAX",
+          depCity: "New York",
+          arrCity: "Los Angeles",
+          dur: "5h 20m",
+          stops: 0,
+          stopTxt: "Non stop",
+          price: 249,
+          ontime: "90% on time",
+          deal: null,
+        },
+      ];
 
-      <!-- ── SIDEBAR FILTERS ── -->
-      <aside class="filters-sidebar" id="filtersSidebar">
+      /* ── State ── */
+      let activeSort = "cheapest";
+      let activeDepSlots = []; // active departure time slots e.g. ['6-12','12-18']
+      let activeArrSlots = [];
+      let maxPrice = 300;
+      let visibleFlights = [...ALL_FLIGHTS];
+      let searchData = {};
 
-        <!-- Popular Filters -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Popular Filters</div>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="popNonstop" onchange="applyFilters()">
-              <span class="filter-check-name">Non Stop</span>
-            </div>
-            <span class="filter-check-price">$129</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="popSpirit" data-airline="Spirit Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">Spirit Airlines</span>
-            </div>
-            <span class="filter-check-price">$129</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="popJetblue" data-airline="JetBlue Airways" onchange="applyFilters()">
-              <span class="filter-check-name">JetBlue Airways</span>
-            </div>
-            <span class="filter-check-price">$159</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="popDelta" data-airline="Delta Air Lines" onchange="applyFilters()">
-              <span class="filter-check-name">Delta Air Lines</span>
-            </div>
-            <span class="filter-check-price">$189</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="popAmerican" data-airline="American Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">American Airlines</span>
-            </div>
-            <span class="filter-check-price">$165</span>
-          </label>
-        </div>
+      /* ── Init ── */
+      document.addEventListener("DOMContentLoaded", () => {
+        loadSearchData();
+        buildDateStrip();
+        renderFlights(sortedFlights(ALL_FLIGHTS, "cheapest"));
+      });
 
-        <!-- Price Range -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">One Way Price</div>
-          <div class="price-range-wrap">
-            <input type="range" class="price-range-input" id="priceRange"
-                   min="100" max="300" value="300" oninput="onPriceRange(this)">
-            <div class="price-range-labels">
-              <span>$100</span>
-              <span id="priceRangeVal">Up to $300</span>
-            </div>
-          </div>
-        </div>
+      function loadSearchData() {
+        try {
+          const raw = localStorage.getItem("dfSearch");
+          searchData = raw ? JSON.parse(raw) : {};
+        } catch (e) {
+          searchData = {};
+        }
 
-        <!-- Stops -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Stops</div>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="stopNonstop" onchange="applyFilters()">
-              <span class="filter-check-name">Non Stop</span>
-            </div>
-            <span class="filter-check-price">$129</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" id="stop1" onchange="applyFilters()">
-              <span class="filter-check-name">1 Stop</span>
-            </div>
-            <span class="filter-check-price">$119</span>
-          </label>
-        </div>
+        const from = searchData.from || "New York, USA";
+        const to = searchData.to || "Los Angeles, USA";
+        const fromCode = searchData.fromCode || "JFK";
+        const toCode = searchData.toCode || "LAX";
+        const depDate = searchData.depDate || "Thu, May 21, 2026";
+        const pax = searchData.paxStr || "1 Adult, Economy";
+        const tripType = searchData.tripType || "One Way";
 
-        <!-- Departure Time -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Departure from <span id="depCityShort">New York</span></div>
-          <div class="time-slot-grid">
-            <button class="time-slot-btn" data-range="0-6" onclick="toggleTimeSlot(this,'dep')">
-              <span class="time-slot-icon"><i class="fa-solid fa-moon"></i></span>
-              <span class="time-slot-label">Before<br>6 am</span>
-            </button>
-            <button class="time-slot-btn" data-range="6-12" onclick="toggleTimeSlot(this,'dep')">
-              <span class="time-slot-icon"><i class="fa-solid fa-sun"></i></span>
-              <span class="time-slot-label">6 am –<br>12 pm</span>
-            </button>
-            <button class="time-slot-btn" data-range="12-18" onclick="toggleTimeSlot(this,'dep')">
-              <span class="time-slot-icon"><i class="fa-solid fa-cloud-sun"></i></span>
-              <span class="time-slot-label">12 pm –<br>6 pm</span>
-            </button>
-            <button class="time-slot-btn" data-range="18-24" onclick="toggleTimeSlot(this,'dep')">
-              <span class="time-slot-icon"><i class="fa-solid fa-moon"></i></span>
-              <span class="time-slot-label">After<br>6 pm</span>
-            </button>
-          </div>
-        </div>
+        /* Desktop bar */
+        el("fsbFromCity").textContent = from;
+        el("fsbFromCode").textContent =
+          fromCode +
+          " — " +
+          (searchData.fromFull || "John F. Kennedy International");
+        el("fsbToCity").textContent = to;
+        el("fsbToCode").textContent =
+          toCode + " — " + (searchData.toFull || "Los Angeles International");
+        el("fsbDepartMain").textContent = depDate;
+        el("fsbDepartDay").textContent = searchData.depDay || "Thursday";
+        el("fsbPax").textContent = pax;
+        el("fsbTripType").innerHTML =
+          tripType +
+          ' <i class="fa-solid fa-chevron-down" style="font-size:0.65rem"></i>';
 
-        <!-- Arrival Time -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Arrival at <span id="arrCityShort">Los Angeles</span></div>
-          <div class="time-slot-grid">
-            <button class="time-slot-btn" data-range="0-6" onclick="toggleTimeSlot(this,'arr')">
-              <span class="time-slot-icon"><i class="fa-solid fa-moon"></i></span>
-              <span class="time-slot-label">Before<br>6 am</span>
-            </button>
-            <button class="time-slot-btn" data-range="6-12" onclick="toggleTimeSlot(this,'arr')">
-              <span class="time-slot-icon"><i class="fa-solid fa-sun"></i></span>
-              <span class="time-slot-label">6 am –<br>12 pm</span>
-            </button>
-            <button class="time-slot-btn" data-range="12-18" onclick="toggleTimeSlot(this,'arr')">
-              <span class="time-slot-icon"><i class="fa-solid fa-cloud-sun"></i></span>
-              <span class="time-slot-label">12 pm –<br>6 pm</span>
-            </button>
-            <button class="time-slot-btn" data-range="18-24" onclick="toggleTimeSlot(this,'arr')">
-              <span class="time-slot-icon"><i class="fa-solid fa-moon"></i></span>
-              <span class="time-slot-label">After<br>6 pm</span>
-            </button>
-          </div>
-        </div>
+        /* Results header */
+        const fromCity = from.split(",")[0];
+        const toCity = to.split(",")[0];
+        el("resultsTitle").textContent =
+          "Flights from " + fromCity + " to " + toCity;
+        el("resultsSub").textContent = depDate + " · " + pax;
 
-        <!-- Departure Airports -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Departure Airports</div>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" checked onchange="applyFilters()">
-              <span class="filter-check-name">John F. Kennedy (JFK)</span>
-            </div>
-            <span class="filter-check-price">$119</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" onchange="applyFilters()">
-              <span class="filter-check-name">LaGuardia (LGA)</span>
-            </div>
-            <span class="filter-check-price">$135</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" onchange="applyFilters()">
-              <span class="filter-check-name">Newark Liberty (EWR)</span>
-            </div>
-            <span class="filter-check-price">$125</span>
-          </label>
-        </div>
+        /* Mobile summary strip */
+        el("fmsMobileRoute").innerHTML = fromCode + " &rarr; " + toCode;
+        const shortDate = searchData.depDateRaw
+          ? (() => {
+              const d = new Date(searchData.depDateRaw);
+              return MONTHS[d.getMonth()] + " " + d.getDate();
+            })()
+          : (depDate.split(",")[1] || depDate).trim().split(",")[0];
+        el("fmsMobileDetails").textContent =
+          shortDate +
+          " · " +
+          (searchData.adults || 1) +
+          " Adult · " +
+          (searchData.cabin || "Economy");
 
-        <!-- Arrival Airports -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Arrival Airports</div>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" checked onchange="applyFilters()">
-              <span class="filter-check-name">Los Angeles Intl (LAX)</span>
-            </div>
-            <span class="filter-check-price">$119</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" onchange="applyFilters()">
-              <span class="filter-check-name">Burbank (BUR)</span>
-            </div>
-            <span class="filter-check-price">$139</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" onchange="applyFilters()">
-              <span class="filter-check-name">Long Beach (LGB)</span>
-            </div>
-            <span class="filter-check-price">$129</span>
-          </label>
-        </div>
+        /* Sidebar city labels */
+        el("depCityShort").textContent = fromCity;
+        el("arrCityShort").textContent = toCity;
+      }
 
-        <!-- Airlines -->
-        <div class="filter-panel">
-          <div class="filter-panel-title">Airlines</div>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="Delta Air Lines" onchange="applyFilters()">
-              <span class="filter-check-name">Delta Air Lines</span>
-            </div>
-            <span class="filter-check-price">$189</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="American Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">American Airlines</span>
-            </div>
-            <span class="filter-check-price">$165</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="JetBlue Airways" onchange="applyFilters()">
-              <span class="filter-check-name">JetBlue Airways</span>
-            </div>
-            <span class="filter-check-price">$159</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="United Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">United Airlines</span>
-            </div>
-            <span class="filter-check-price">$142</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="Spirit Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">Spirit Airlines</span>
-            </div>
-            <span class="filter-check-price">$129</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="Alaska Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">Alaska Airlines</span>
-            </div>
-            <span class="filter-check-price">$219</span>
-          </label>
-          <label class="filter-check-item">
-            <div class="filter-check-left">
-              <input type="checkbox" data-airline="Frontier Airlines" onchange="applyFilters()">
-              <span class="filter-check-name">Frontier Airlines</span>
-            </div>
-            <span class="filter-check-price">$119</span>
-          </label>
-        </div>
+      /* ── Date strip ── */
+      const DATE_PRICES = [
+        289, 245, 219, 189, 175, 195, 215, 179, 169, 199, 225, 239, 269,
+      ];
+      const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const MONTHS = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
 
-      </aside><!-- /filters-sidebar -->
+      function buildDateStrip() {
+        const strip = el("dateStrip");
+        strip.innerHTML = "";
+        let base;
+        try {
+          base = searchData.depDateRaw
+            ? new Date(searchData.depDateRaw)
+            : new Date(2026, 4, 21);
+        } catch (e) {
+          base = new Date(2026, 4, 21);
+        }
 
-      <!-- ── RESULTS MAIN ── -->
-      <main class="results-main">
+        for (let i = -3; i <= 9; i++) {
+          const d = new Date(base);
+          d.setDate(d.getDate() + i);
+          const price = DATE_PRICES[i + 3] || 150 + Math.abs(i) * 8;
+          const cls = price < 180 ? "good" : price < 220 ? "ok" : "high";
+          const isActive = i === 0;
+          const div = document.createElement("div");
+          div.className = "date-item" + (isActive ? " active" : "");
+          div.innerHTML =
+            '<div class="date-day">' +
+            DAYS[d.getDay()] +
+            ", " +
+            MONTHS[d.getMonth()] +
+            " " +
+            d.getDate() +
+            "</div>" +
+            '<div class="date-price ' +
+            cls +
+            '">$' +
+            price +
+            "</div>";
+          div.addEventListener("click", () => selectDate(div));
+          strip.appendChild(div);
+        }
 
-        <div class="results-header">
-          <h1 class="results-title" id="resultsTitle">Flights from New York to Los Angeles</h1>
-          <div class="results-sub" id="resultsSub">Thursday, May 21, 2026 &middot; 1 Adult &middot; Economy</div>
-        </div>
+        /* Scroll active into center */
+        requestAnimationFrame(() => {
+          const active = strip.querySelector(".active");
+          if (active)
+            strip.scrollLeft =
+              active.offsetLeft -
+              strip.clientWidth / 2 +
+              active.clientWidth / 2;
+        });
+      }
 
-        <div class="promo-banner">
-          <div class="promo-icon"><i class="fa-solid fa-tag"></i></div>
-          <div>
-            <div class="promo-text">Save up to $50 with our exclusive member fares</div>
-            <div class="promo-sub">Use code <strong>FAREWAYS50</strong> at checkout &middot; Limited time offer</div>
-          </div>
-        </div>
+      function selectDate(el) {
+        document
+          .querySelectorAll(".date-item")
+          .forEach((d) => d.classList.remove("active"));
+        el.classList.add("active");
+      }
 
-        <div class="date-strip-wrap">
+      function scrollDateStrip(dir) {
+        el("dateStrip").scrollBy({ left: dir * 220, behavior: "smooth" });
+      }
 
-          <!-- Date strip -->
-          <div class="date-strip-container">
-            <button class="date-strip-arrow ds-prev" onclick="scrollDateStrip(-1)" aria-label="Previous dates">
-              <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <div class="date-strip" id="dateStrip"></div>
-            <button class="date-strip-arrow ds-next" onclick="scrollDateStrip(1)" aria-label="Next dates">
-              <i class="fa-solid fa-chevron-right"></i>
-            </button>
-          </div>
+      /* ── Render ── */
+      function renderFlights(list) {
+        const container = el("flightCards");
+        const noMsg = el("noResultsMsg");
+        const countBar = el("resultsCountBar");
 
-          <!-- Sort tabs -->
-          <div class="sort-tabs" id="sortTabs">
-            <div class="sort-tab active" onclick="sortFlights('cheapest',this)">
-              <div class="sort-tab-icon"><i class="fa-solid fa-dollar-sign"></i></div>
-              <div>
-                <div class="sort-tab-name">CHEAPEST</div>
-                <div class="sort-tab-price" id="stCheap">$119 &middot; 8h 45m</div>
-              </div>
-            </div>
-            <div class="sort-tab" onclick="sortFlights('nonstop',this)">
-              <div class="sort-tab-icon" style="background:#7c3aed"><i class="fa-solid fa-bolt"></i></div>
-              <div>
-                <div class="sort-tab-name">NON STOP FIRST</div>
-                <div class="sort-tab-price" id="stNonstop">$129 &middot; 5h 20m</div>
-              </div>
-            </div>
-            <div class="sort-tab" onclick="sortFlights('preferred',this)">
-              <div class="sort-tab-icon" style="background:#f59e0b"><i class="fa-regular fa-star"></i></div>
-              <div>
-                <div class="sort-tab-name">YOU MAY PREFER</div>
-                <div class="sort-tab-price" id="stPrefer">$179 &middot; 5h 25m</div>
-              </div>
-            </div>
-            <div class="sort-tab" onclick="sortFlights('depart',this)">
-              <div class="sort-tab-icon" style="background:#6b7280"><i class="fa-regular fa-clock"></i></div>
-              <div>
-                <div class="sort-tab-name">DEPART EARLY</div>
-                <div class="sort-tab-price"></div>
-              </div>
-            </div>
-          </div>
+        if (!list.length) {
+          container.innerHTML = "";
+          noMsg.style.display = "block";
+          countBar.textContent = "No flights match your filters";
+          return;
+        }
 
-          <div class="results-count-bar" id="resultsCountBar">
-            Flights sorted by Lowest fares on this route
-          </div>
+        noMsg.style.display = "none";
+        countBar.textContent =
+          list.length +
+          " flight" +
+          (list.length > 1 ? "s" : "") +
+          " found — sorted by " +
+          sortLabel(activeSort);
 
-          <div class="flight-cards" id="flightCards"></div>
-
-          <div class="no-results-msg" id="noResultsMsg" style="display:none">
-            <i class="fa-solid fa-plane-circle-xmark"></i>
-            <p>No flights match your current filters.</p>
-            <button onclick="resetFilters()">Clear All Filters</button>
-          </div>
-
-        </div><!-- /date-strip-wrap -->
-      </main>
-    </div>
-  </div>
-
-  <!-- Floating call button -->
-  <a href="tel:+18551234567" class="float-call" aria-label="Call us">
-    <i class="fa-solid fa-phone"></i><span>Call Now</span>
-  </a>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-  /* ── Flight Data ── */
-  const ALL_FLIGHTS = [
-    { id:1,  airline:'Frontier Airlines',  code:'F9',  flight:'F9 201',  logo:'al-frontier', dep:'07:00', depH:7,  arr:'12:45', arrH:12, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'8h 45m', stops:1, stopTxt:'1 Stop (DEN)', price:119, ontime:'72% on time', deal:'Save $20 with code FAREWAYS20' },
-    { id:2,  airline:'Spirit Airlines',    code:'NK',  flight:'NK 701',  logo:'al-spirit',   dep:'06:50', depH:6,  arr:'10:15', arrH:10, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 25m', stops:0, stopTxt:'Non stop',    price:129, ontime:'78% on time', deal:null },
-    { id:3,  airline:'United Airlines',    code:'UA',  flight:'UA 289',  logo:'al-united',   dep:'07:45', depH:7,  arr:'13:20', arrH:13, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'8h 35m', stops:1, stopTxt:'1 Stop (ORD)', price:142, ontime:'81% on time', deal:'Members-only fare — Sign up to save' },
-    { id:4,  airline:'American Airlines',  code:'AA',  flight:'AA 789',  logo:'al-american', dep:'14:00', depH:14, arr:'19:30', arrH:19, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'8h 30m', stops:1, stopTxt:'1 Stop (DFW)', price:165, ontime:'79% on time', deal:null },
-    { id:5,  airline:'JetBlue Airways',   code:'B6',  flight:'B6 603',  logo:'al-jetblue',  dep:'20:30', depH:20, arr:'23:55', arrH:23, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 25m', stops:0, stopTxt:'Non stop',    price:159, ontime:'83% on time', deal:null },
-    { id:6,  airline:'JetBlue Airways',   code:'B6',  flight:'B6 501',  logo:'al-jetblue',  dep:'10:15', depH:10, arr:'13:40', arrH:13, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 25m', stops:0, stopTxt:'Non stop',    price:179, ontime:'84% on time', deal:'Save $25 with code FAREWAYS25' },
-    { id:7,  airline:'Delta Air Lines',   code:'DL',  flight:'DL 401',  logo:'al-delta',    dep:'06:00', depH:6,  arr:'09:20', arrH:9,  depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 20m', stops:0, stopTxt:'Non stop',    price:189, ontime:'88% on time', deal:null },
-    { id:8,  airline:'American Airlines', code:'AA',  flight:'AA 123',  logo:'al-american', dep:'08:30', depH:8,  arr:'11:55', arrH:11, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 25m', stops:0, stopTxt:'Non stop',    price:205, ontime:'82% on time', deal:null },
-    { id:9,  airline:'Alaska Airlines',   code:'AS',  flight:'AS 301',  logo:'al-alaska',   dep:'11:30', depH:11, arr:'15:10', arrH:15, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 40m', stops:0, stopTxt:'Non stop',    price:219, ontime:'86% on time', deal:null },
-    { id:10, airline:'Delta Air Lines',   code:'DL',  flight:'DL 567',  logo:'al-delta',    dep:'18:00', depH:18, arr:'21:20', arrH:21, depApt:'JFK', arrApt:'LAX', depCity:'New York',  arrCity:'Los Angeles', dur:'5h 20m', stops:0, stopTxt:'Non stop',    price:249, ontime:'90% on time', deal:null }
-  ];
-
-  /* ── State ── */
-  let activeSort    = 'cheapest';
-  let activeDepSlots = [];  // active departure time slots e.g. ['6-12','12-18']
-  let activeArrSlots = [];
-  let maxPrice      = 300;
-  let visibleFlights = [...ALL_FLIGHTS];
-  let searchData    = {};
-
-  /* ── Init ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    loadSearchData();
-    buildDateStrip();
-    renderFlights(sortedFlights(ALL_FLIGHTS, 'cheapest'));
-  });
-
-  function loadSearchData() {
-    try {
-      const raw = localStorage.getItem('dfSearch');
-      searchData = raw ? JSON.parse(raw) : {};
-    } catch(e) { searchData = {}; }
-
-    const from    = searchData.from    || 'New York, USA';
-    const to      = searchData.to      || 'Los Angeles, USA';
-    const fromCode= searchData.fromCode|| 'JFK';
-    const toCode  = searchData.toCode  || 'LAX';
-    const depDate = searchData.depDate || 'Thu, May 21, 2026';
-    const pax     = searchData.paxStr  || '1 Adult, Economy';
-    const tripType= searchData.tripType|| 'One Way';
-
-    /* Desktop bar */
-    el('fsbFromCity').textContent = from;
-    el('fsbFromCode').textContent = fromCode + ' — ' + (searchData.fromFull || 'John F. Kennedy International');
-    el('fsbToCity').textContent   = to;
-    el('fsbToCode').textContent   = toCode + ' — ' + (searchData.toFull || 'Los Angeles International');
-    el('fsbDepartMain').textContent = depDate;
-    el('fsbDepartDay').textContent  = searchData.depDay || 'Thursday';
-    el('fsbPax').textContent        = pax;
-    el('fsbTripType').innerHTML     = tripType + ' <i class="fa-solid fa-chevron-down" style="font-size:0.65rem"></i>';
-
-    /* Results header */
-    const fromCity = from.split(',')[0];
-    const toCity   = to.split(',')[0];
-    el('resultsTitle').textContent = 'Flights from ' + fromCity + ' to ' + toCity;
-    el('resultsSub').textContent   = depDate + ' · ' + pax;
-
-    /* Mobile summary strip */
-    el('fmsMobileRoute').innerHTML = fromCode + ' &rarr; ' + toCode;
-    const shortDate = searchData.depDateRaw
-      ? (() => { const d = new Date(searchData.depDateRaw); return MONTHS[d.getMonth()] + ' ' + d.getDate(); })()
-      : (depDate.split(',')[1] || depDate).trim().split(',')[0];
-    el('fmsMobileDetails').textContent = shortDate + ' · ' + (searchData.adults || 1) + ' Adult · ' + (searchData.cabin || 'Economy');
-
-    /* Sidebar city labels */
-    el('depCityShort').textContent = fromCity;
-    el('arrCityShort').textContent = toCity;
-  }
-
-  /* ── Date strip ── */
-  const DATE_PRICES = [289, 245, 219, 189, 175, 195, 215, 179, 169, 199, 225, 239, 269];
-  const DAYS  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const MONTHS= ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-  function buildDateStrip() {
-    const strip = el('dateStrip');
-    strip.innerHTML = '';
-    let base;
-    try { base = searchData.depDateRaw ? new Date(searchData.depDateRaw) : new Date(2026,4,21); }
-    catch(e) { base = new Date(2026,4,21); }
-
-    for (let i = -3; i <= 9; i++) {
-      const d = new Date(base);
-      d.setDate(d.getDate() + i);
-      const price = DATE_PRICES[i + 3] || (150 + Math.abs(i) * 8);
-      const cls   = price < 180 ? 'good' : price < 220 ? 'ok' : 'high';
-      const isActive = i === 0;
-      const div = document.createElement('div');
-      div.className = 'date-item' + (isActive ? ' active' : '');
-      div.innerHTML =
-        '<div class="date-day">' + DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</div>' +
-        '<div class="date-price ' + cls + '">$' + price + '</div>';
-      div.addEventListener('click', () => selectDate(div));
-      strip.appendChild(div);
-    }
-
-    /* Scroll active into center */
-    requestAnimationFrame(() => {
-      const active = strip.querySelector('.active');
-      if (active) strip.scrollLeft = active.offsetLeft - strip.clientWidth / 2 + active.clientWidth / 2;
-    });
-  }
-
-  function selectDate(el) {
-    document.querySelectorAll('.date-item').forEach(d => d.classList.remove('active'));
-    el.classList.add('active');
-  }
-
-  function scrollDateStrip(dir) {
-    el('dateStrip').scrollBy({ left: dir * 220, behavior: 'smooth' });
-  }
-
-  /* ── Render ── */
-  function renderFlights(list) {
-    const container = el('flightCards');
-    const noMsg     = el('noResultsMsg');
-    const countBar  = el('resultsCountBar');
-
-    if (!list.length) {
-      container.innerHTML = '';
-      noMsg.style.display = 'block';
-      countBar.textContent = 'No flights match your filters';
-      return;
-    }
-
-    noMsg.style.display = 'none';
-    countBar.textContent = list.length + ' flight' + (list.length > 1 ? 's' : '') + ' found — sorted by ' + sortLabel(activeSort);
-
-    container.innerHTML = list.map(f => {
-      const stopsClass = f.stops === 0 ? 'nonstop' : 'one-stop';
-      const dealHTML   = f.deal
-        ? '<div class="deal-strip"><i class="fa-solid fa-circle"></i>' + f.deal + '</div>'
-        : '<div style="flex:1"></div>';
-      return `
+        container.innerHTML = list
+          .map((f) => {
+            const stopsClass = f.stops === 0 ? "nonstop" : "one-stop";
+            const dealHTML = f.deal
+              ? '<div class="deal-strip"><i class="fa-solid fa-circle"></i>' +
+                f.deal +
+                "</div>"
+              : '<div style="flex:1"></div>';
+            return `
         <div class="flight-card" data-id="${f.id}" data-price="${f.price}" data-stops="${f.stops}" data-airline="${f.airline}" data-deph="${f.depH}" data-arrh="${f.arrH}">
           <div class="flight-card-top">
             <div class="flight-ontime-badge"><i class="fa-regular fa-clock"></i> ${f.ontime}</div>
@@ -616,7 +1082,7 @@
                 <div class="price-amount">$${f.price}</div>
                 <div class="price-per">per adult</div>
               </div>
-              <button class="view-fares-btn" onclick="viewFares(${f.price})">VIEW FARES</button>
+              <button class="view-fares-btn" onclick="viewFares(${f.id})">VIEW FARES</button>
             </div>
           </div>
           <div class="flight-card-footer">
@@ -625,151 +1091,197 @@
             <a href="tel:+18551234567" class="view-details-link">VIEW FLIGHT DETAILS</a>
           </div>
         </div>`;
-    }).join('');
-  }
+          })
+          .join("");
+      }
 
-  /* ── Sort ── */
-  function sortedFlights(list, type) {
-    const copy = [...list];
-    switch(type) {
-      case 'cheapest':  return copy.sort((a,b) => a.price - b.price);
-      case 'nonstop':   return copy.sort((a,b) => a.stops - b.stops || a.price - b.price);
-      case 'preferred': return copy.sort((a,b) => {
-          const scoreA = a.stops * 50 + a.price * 0.5;
-          const scoreB = b.stops * 50 + b.price * 0.5;
-          return scoreA - scoreB;
-        });
-      case 'depart':    return copy.sort((a,b) => a.depH - b.depH);
-      default:          return copy;
-    }
-  }
+      /* ── Sort ── */
+      function sortedFlights(list, type) {
+        const copy = [...list];
+        switch (type) {
+          case "cheapest":
+            return copy.sort((a, b) => a.price - b.price);
+          case "nonstop":
+            return copy.sort((a, b) => a.stops - b.stops || a.price - b.price);
+          case "preferred":
+            return copy.sort((a, b) => {
+              const scoreA = a.stops * 50 + a.price * 0.5;
+              const scoreB = b.stops * 50 + b.price * 0.5;
+              return scoreA - scoreB;
+            });
+          case "depart":
+            return copy.sort((a, b) => a.depH - b.depH);
+          default:
+            return copy;
+        }
+      }
 
-  function sortLabel(type) {
-    return { cheapest:'Lowest fares', nonstop:'Non Stop first', preferred:'Recommended', depart:'Earliest departure' }[type] || 'Lowest fares';
-  }
+      function sortLabel(type) {
+        return (
+          {
+            cheapest: "Lowest fares",
+            nonstop: "Non Stop first",
+            preferred: "Recommended",
+            depart: "Earliest departure",
+          }[type] || "Lowest fares"
+        );
+      }
 
-  function sortFlights(type, clickedEl) {
-    activeSort = type;
+      function sortFlights(type, clickedEl) {
+        activeSort = type;
 
-    /* Desktop sort tabs */
-    document.querySelectorAll('.sort-tab').forEach(t => t.classList.remove('active'));
-    const desktopTab = document.querySelector(`.sort-tab[onclick*="${type}"]`);
-    if (desktopTab) desktopTab.classList.add('active');
+        /* Desktop sort tabs */
+        document
+          .querySelectorAll(".sort-tab")
+          .forEach((t) => t.classList.remove("active"));
+        const desktopTab = document.querySelector(
+          `.sort-tab[onclick*="${type}"]`,
+        );
+        if (desktopTab) desktopTab.classList.add("active");
 
-    /* Mobile pills */
-    document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
-    if (clickedEl && clickedEl.classList.contains('sort-pill')) clickedEl.classList.add('active');
+        /* Mobile pills */
+        document
+          .querySelectorAll(".sort-pill")
+          .forEach((p) => p.classList.remove("active"));
+        if (clickedEl && clickedEl.classList.contains("sort-pill"))
+          clickedEl.classList.add("active");
 
-    applyFilters();
-  }
+        applyFilters();
+      }
 
-  /* ── Filters ── */
-  function applyFilters() {
-    let list = [...ALL_FLIGHTS];
+      /* ── Filters ── */
+      function applyFilters() {
+        let list = [...ALL_FLIGHTS];
 
-    /* Price */
-    list = list.filter(f => f.price <= maxPrice);
+        /* Price */
+        list = list.filter((f) => f.price <= maxPrice);
 
-    /* Stops (Popular + dedicated) */
-    const wantNonstop = el('popNonstop').checked || el('stopNonstop').checked;
-    const want1stop   = el('stop1').checked;
-    if (wantNonstop || want1stop) {
-      list = list.filter(f => (wantNonstop && f.stops === 0) || (want1stop && f.stops === 1));
-    }
+        /* Stops (Popular + dedicated) */
+        const wantNonstop =
+          el("popNonstop").checked || el("stopNonstop").checked;
+        const want1stop = el("stop1").checked;
+        if (wantNonstop || want1stop) {
+          list = list.filter(
+            (f) =>
+              (wantNonstop && f.stops === 0) || (want1stop && f.stops === 1),
+          );
+        }
 
-    /* Airlines (sidebar checkboxes with data-airline) */
-    const checkedAirlines = [...document.querySelectorAll('input[data-airline]:checked')].map(i => i.dataset.airline);
-    if (checkedAirlines.length) {
-      list = list.filter(f => checkedAirlines.includes(f.airline));
-    }
+        /* Airlines (sidebar checkboxes with data-airline) */
+        const checkedAirlines = [
+          ...document.querySelectorAll("input[data-airline]:checked"),
+        ].map((i) => i.dataset.airline);
+        if (checkedAirlines.length) {
+          list = list.filter((f) => checkedAirlines.includes(f.airline));
+        }
 
-    /* Departure time */
-    if (activeDepSlots.length) {
-      list = list.filter(f => activeDepSlots.some(slot => {
-        const [lo, hi] = slot.split('-').map(Number);
-        return f.depH >= lo && f.depH < hi;
-      }));
-    }
+        /* Departure time */
+        if (activeDepSlots.length) {
+          list = list.filter((f) =>
+            activeDepSlots.some((slot) => {
+              const [lo, hi] = slot.split("-").map(Number);
+              return f.depH >= lo && f.depH < hi;
+            }),
+          );
+        }
 
-    /* Arrival time */
-    if (activeArrSlots.length) {
-      list = list.filter(f => activeArrSlots.some(slot => {
-        const [lo, hi] = slot.split('-').map(Number);
-        return f.arrH >= lo && f.arrH < hi;
-      }));
-    }
+        /* Arrival time */
+        if (activeArrSlots.length) {
+          list = list.filter((f) =>
+            activeArrSlots.some((slot) => {
+              const [lo, hi] = slot.split("-").map(Number);
+              return f.arrH >= lo && f.arrH < hi;
+            }),
+          );
+        }
 
-    visibleFlights = sortedFlights(list, activeSort);
-    renderFlights(visibleFlights);
-  }
+        visibleFlights = sortedFlights(list, activeSort);
+        renderFlights(visibleFlights);
+      }
 
-  function resetFilters() {
-    document.querySelectorAll('.filter-check-left input[type=checkbox]').forEach(cb => cb.checked = false);
-    document.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('active'));
-    el('priceRange').value = 300;
-    el('priceRangeVal').textContent = 'Up to $300';
-    maxPrice = 300;
-    activeDepSlots = [];
-    activeArrSlots = [];
-    applyFilters();
-  }
+      function resetFilters() {
+        document
+          .querySelectorAll(".filter-check-left input[type=checkbox]")
+          .forEach((cb) => (cb.checked = false));
+        document
+          .querySelectorAll(".time-slot-btn")
+          .forEach((b) => b.classList.remove("active"));
+        el("priceRange").value = 300;
+        el("priceRangeVal").textContent = "Up to $300";
+        maxPrice = 300;
+        activeDepSlots = [];
+        activeArrSlots = [];
+        applyFilters();
+      }
 
-  /* ── Price range ── */
-  function onPriceRange(input) {
-    maxPrice = parseInt(input.value);
-    el('priceRangeVal').textContent = 'Up to $' + maxPrice;
-    applyFilters();
-  }
+      /* ── Price range ── */
+      function onPriceRange(input) {
+        maxPrice = parseInt(input.value);
+        el("priceRangeVal").textContent = "Up to $" + maxPrice;
+        applyFilters();
+      }
 
-  /* ── Time slot toggle ── */
-  function toggleTimeSlot(btn, type) {
-    btn.classList.toggle('active');
-    const slot  = btn.dataset.range;
-    const arr   = type === 'dep' ? activeDepSlots : activeArrSlots;
-    const idx   = arr.indexOf(slot);
-    if (idx === -1) arr.push(slot); else arr.splice(idx, 1);
-    applyFilters();
-  }
+      /* ── Time slot toggle ── */
+      function toggleTimeSlot(btn, type) {
+        btn.classList.toggle("active");
+        const slot = btn.dataset.range;
+        const arr = type === "dep" ? activeDepSlots : activeArrSlots;
+        const idx = arr.indexOf(slot);
+        if (idx === -1) arr.push(slot);
+        else arr.splice(idx, 1);
+        applyFilters();
+      }
 
-  /* ── Mobile sidebar ── */
-  function openFilters() {
-    el('filtersSidebar').classList.add('open');
-    el('filterOverlay').classList.add('open');
-    el('closeFilterBtn').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
+      /* ── Mobile sidebar ── */
+      function openFilters() {
+        el("filtersSidebar").classList.add("open");
+        el("filterOverlay").classList.add("open");
+        el("closeFilterBtn").style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
 
-  function closeFilters() {
-    el('filtersSidebar').classList.remove('open');
-    el('filterOverlay').classList.remove('open');
-    el('closeFilterBtn').style.display = 'none';
-    document.body.style.overflow = '';
-  }
+      function closeFilters() {
+        el("filtersSidebar").classList.remove("open");
+        el("filterOverlay").classList.remove("open");
+        el("closeFilterBtn").style.display = "none";
+        document.body.style.overflow = "";
+      }
 
-  /* ── Fare type ── */
-  function setFareType(label) {
-    document.querySelectorAll('.fare-type-opt').forEach(l => l.classList.remove('ft-active'));
-    label.classList.add('ft-active');
-  }
+      /* ── Fare type ── */
+      function setFareType(label) {
+        document
+          .querySelectorAll(".fare-type-opt")
+          .forEach((l) => l.classList.remove("ft-active"));
+        label.classList.add("ft-active");
+      }
 
-  /* ── FSB swap ── */
-  function fsbSwap() {
-    const fc = el('fsbFromCity'), tc = el('fsbToCity');
-    const fk = el('fsbFromCode'), tk = el('fsbToCode');
-    [fc.textContent, tc.textContent] = [tc.textContent, fc.textContent];
-    [fk.textContent, tk.textContent] = [tk.textContent, fk.textContent];
-    const mr = el('fmsMobileRoute');
-    const parts = mr.innerHTML.split('&rarr;');
-    if (parts.length === 2) mr.innerHTML = parts[1].trim() + ' &rarr; ' + parts[0].trim();
-  }
+      /* ── FSB swap ── */
+      function fsbSwap() {
+        const fc = el("fsbFromCity"),
+          tc = el("fsbToCity");
+        const fk = el("fsbFromCode"),
+          tk = el("fsbToCode");
+        [fc.textContent, tc.textContent] = [tc.textContent, fc.textContent];
+        [fk.textContent, tk.textContent] = [tk.textContent, fk.textContent];
+        const mr = el("fmsMobileRoute");
+        const parts = mr.innerHTML.split("&rarr;");
+        if (parts.length === 2)
+          mr.innerHTML = parts[1].trim() + " &rarr; " + parts[0].trim();
+      }
 
-  /* ── View Fares ── */
-  function viewFares(price) {
-    window.location.href = 'tel:+18551234567';
-  }
+      /* ── View Fares ── */
+      function viewFares(id) {
+        const flight = ALL_FLIGHTS.find((f) => f.id === id);
+        if (flight) {
+          localStorage.setItem("dfSelectedFlight", JSON.stringify(flight));
+        }
+        window.location.href = "checkout.html";
+      }
 
-  /* ── Helper ── */
-  function el(id) { return document.getElementById(id); }
-  </script>
-</body>
+      /* ── Helper ── */
+      function el(id) {
+        return document.getElementById(id);
+      }
+    </script>
+  </body>
 </html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Confirmed | Destination Fareways</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="checkout-page">
+    <main class="conf-shell">
+      <!-- Decorative large background plane -->
+      <div class="conf-bg-plane"><i class="fa-solid fa-plane"></i></div>
+
+      <div class="conf-wrap">
+        <!-- Animated checkmark -->
+        <div class="conf-check-wrap">
+          <div class="conf-ripple"></div>
+          <div class="conf-ripple conf-ripple-2"></div>
+          <div class="conf-check-circle">
+            <i class="fa-solid fa-check"></i>
+          </div>
+        </div>
+
+        <!-- Heading -->
+        <div class="conf-title-area">
+          <h1>Booking Confirmed!</h1>
+          <p>Your flight has been successfully booked.</p>
+        </div>
+
+        <!-- ── Boarding pass ── -->
+        <div class="conf-pass">
+          <!-- Header bar -->
+          <div class="conf-pass-header">
+            <div class="conf-pass-brand">
+              <i class="fa-solid fa-plane-departure"></i>
+              Destination<strong>Fareways</strong>
+            </div>
+            <div class="conf-pass-chip">CONFIRMED</div>
+          </div>
+
+          <!-- Route -->
+          <div class="conf-route">
+            <div class="conf-endpoint">
+              <div class="conf-iata" id="confFromCode">JFK</div>
+              <div class="conf-city-name" id="confFrom">New York</div>
+              <div class="conf-dep-time" id="confDepTime">06:00</div>
+            </div>
+
+            <div class="conf-flight-path">
+              <div class="conf-flight-path-dur" id="confDur">5h 25m</div>
+              <div class="conf-flight-track">
+                <div class="conf-track-dot"></div>
+                <div class="conf-track-line"></div>
+                <i class="fa-solid fa-plane conf-track-plane"></i>
+                <div class="conf-track-line right-line"></div>
+                <div class="conf-track-dot"></div>
+              </div>
+              <div class="conf-flight-path-stops" id="confStops">Non stop</div>
+            </div>
+
+            <div class="conf-endpoint conf-endpoint-right">
+              <div class="conf-iata" id="confToCode">LAX</div>
+              <div class="conf-city-name" id="confTo">Los Angeles</div>
+              <div class="conf-dep-time" id="confArrTime">09:20</div>
+            </div>
+          </div>
+
+          <!-- Detail cells -->
+          <div class="conf-details-strip">
+            <div class="conf-detail-cell">
+              <span>Date</span>
+              <strong id="confDate">Thu, May 21</strong>
+            </div>
+            <div class="conf-cell-divider"></div>
+            <div class="conf-detail-cell">
+              <span>Airline</span>
+              <strong id="confAirline">Delta Air Lines</strong>
+            </div>
+            <div class="conf-cell-divider"></div>
+            <div class="conf-detail-cell">
+              <span>Class</span>
+              <strong>Economy</strong>
+            </div>
+            <div class="conf-cell-divider"></div>
+            <div class="conf-detail-cell">
+              <span>Total Paid</span>
+              <strong class="accent" id="confTotal">$227</strong>
+            </div>
+          </div>
+
+          <!-- Tear line -->
+          <div class="conf-tear">
+            <div class="conf-tear-notch left"></div>
+            <div class="conf-tear-dash"></div>
+            <div class="conf-tear-notch right"></div>
+          </div>
+
+          <!-- Booking reference stub -->
+          <div class="conf-stub">
+            <div class="conf-stub-ref-group">
+              <div class="conf-stub-label">Booking Reference</div>
+              <div class="conf-stub-ref" id="bookingRef">DF00000000</div>
+            </div>
+            <div class="conf-stub-barcode"></div>
+          </div>
+        </div>
+        <!-- /.conf-pass -->
+
+        <!-- Notice -->
+        <p class="conf-notice">
+          <i class="fa-regular fa-envelope"></i>
+          A summary has been prepared for your records.
+        </p>
+
+        <!-- Action buttons -->
+        <div class="conf-actions-row">
+          <a href="index.html" class="checkout-primary">
+            <i class="fa-solid fa-house"></i> Back to Home
+          </a>
+          <a href="flights.html" class="checkout-secondary">
+            <i class="fa-solid fa-magnifying-glass"></i> Search Flights
+          </a>
+        </div>
+      </div>
+      <!-- /.conf-wrap -->
+    </main>
+
+    <script>
+      const ref = localStorage.getItem("dfBookingRef") || "DF00000000";
+      const fare = JSON.parse(
+        localStorage.getItem("dfCheckoutFare") || '{"total":227}',
+      );
+      const flight = JSON.parse(
+        localStorage.getItem("dfSelectedFlight") || "null",
+      );
+      const search = JSON.parse(localStorage.getItem("dfSearch") || "{}");
+
+      document.getElementById("bookingRef").textContent = ref;
+      document.getElementById("confTotal").textContent =
+        "$" + (fare.total || 227);
+
+      const fromRaw = search.from || (flight && flight.depCity) || "New York";
+      const toRaw = search.to || (flight && flight.arrCity) || "Los Angeles";
+      const fromCity = fromRaw.split(",")[0];
+      const toCity = toRaw.split(",")[0];
+
+      document.getElementById("confFrom").textContent = fromCity;
+      document.getElementById("confTo").textContent = toCity;
+
+      const codeFrom =
+        (flight && flight.depApt) || fromCity.slice(0, 3).toUpperCase();
+      const codeTo =
+        (flight && flight.arrApt) || toCity.slice(0, 3).toUpperCase();
+      document.getElementById("confFromCode").textContent = codeFrom;
+      document.getElementById("confToCode").textContent = codeTo;
+
+      if (flight) {
+        document.getElementById("confDepTime").textContent =
+          flight.dep || "06:00";
+        document.getElementById("confArrTime").textContent =
+          flight.arr || "09:20";
+        document.getElementById("confDur").textContent = flight.dur || "5h 25m";
+        document.getElementById("confStops").textContent =
+          flight.stopTxt || "Non stop";
+        document.getElementById("confAirline").textContent =
+          flight.airline || "Delta Air Lines";
+      }
+
+      if (search.depDate)
+        document.getElementById("confDate").textContent = search.depDate;
+    </script>
+  </body>
+</html>

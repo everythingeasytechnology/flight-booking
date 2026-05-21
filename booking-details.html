@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traveller Details | Destination Fareways</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="checkout-page">
+    <header class="checkout-top">
+      <div class="checkout-container checkout-top-inner">
+        <a href="index.html" class="checkout-brand">
+          <i class="fa-solid fa-plane-departure"></i>
+          Destination<strong>Fareways</strong>
+        </a>
+        <nav class="checkout-steps" aria-label="Booking steps">
+          <span id="stepTraveller" class="active">Traveller Details</span>
+          <span id="stepPayment">Payment</span>
+          <span>Confirmation</span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="checkout-shell">
+      <div class="checkout-container narrow">
+        <!-- ════════════════════════════════════════
+           SECTION 1 — Traveller details
+           ════════════════════════════════════════ -->
+        <section class="checkout-form-card panel-fade-in" id="travellerPanel">
+          <div class="form-head-row">
+            <div class="form-section-icon">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form-head">
+              <h2>Contact information</h2>
+              <p>We will send your booking confirmation to these details.</p>
+            </div>
+          </div>
+
+          <form id="travellerForm" novalidate>
+            <div class="booking-form-grid">
+              <label class="booking-field">
+                <span>Full name</span>
+                <div class="input-icon-wrap">
+                  <i class="fa-regular fa-user input-icon"></i>
+                  <input
+                    type="text"
+                    id="fullName"
+                    autocomplete="name"
+                    placeholder="e.g. John Smith"
+                  />
+                </div>
+                <small class="field-error" id="nameError"></small>
+              </label>
+
+              <label class="booking-field">
+                <span>Mobile number</span>
+                <div class="input-icon-wrap">
+                  <i class="fa-solid fa-mobile-screen-button input-icon"></i>
+                  <input
+                    type="tel"
+                    id="phone"
+                    autocomplete="tel"
+                    placeholder="10-digit US number"
+                  />
+                </div>
+                <small class="field-error" id="phoneError"></small>
+              </label>
+
+              <label class="booking-field full">
+                <span>Email address</span>
+                <div class="input-icon-wrap">
+                  <i class="fa-regular fa-envelope input-icon"></i>
+                  <input
+                    type="email"
+                    id="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <small class="field-error" id="emailError"></small>
+              </label>
+            </div>
+
+            <button type="submit" class="checkout-primary">
+              Continue to Payment &nbsp;<i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+        </section>
+
+        <!-- ════════════════════════════════════════
+           SECTION 2 — Payment (hidden initially)
+           ════════════════════════════════════════ -->
+        <section class="checkout-form-card" id="paymentPanel" hidden>
+          <!-- Top bar: back + title + network logos -->
+          <div class="payment-panel-top">
+            <button class="back-btn" onclick="goBack()">
+              <i class="fa-solid fa-arrow-left"></i> Edit details
+            </button>
+
+            <div class="payment-panel-top-center">
+              <h2>Secure Payment</h2>
+              <p>Encrypted with 256-bit SSL &mdash; no real charge.</p>
+            </div>
+
+            <div class="card-networks">
+              <div class="net-badge net-visa active" id="netVisa">VISA</div>
+              <div class="net-badge net-mc" id="netMc">MC</div>
+              <div class="net-badge net-amex" id="netAmex">AMEX</div>
+              <div class="net-badge net-discover" id="netDisc">DISC</div>
+            </div>
+          </div>
+
+          <!-- 2-column body -->
+          <div class="payment-layout">
+            <!-- LEFT — card fields -->
+            <div class="payment-fields">
+              <form id="paymentForm" novalidate>
+                <div class="booking-form-grid">
+                  <label class="booking-field full">
+                    <span>Card number</span>
+                    <div class="input-icon-wrap">
+                      <i class="fa-regular fa-credit-card input-icon"></i>
+                      <input
+                        type="text"
+                        id="cardNumber"
+                        inputmode="numeric"
+                        maxlength="19"
+                        placeholder="1234  5678  9012  3456"
+                        autocomplete="cc-number"
+                      />
+                      <span class="card-type-chip" id="cardTypeChip"></span>
+                    </div>
+                    <small class="field-error" id="cardError"></small>
+                  </label>
+
+                  <label class="booking-field full">
+                    <span>Name on card</span>
+                    <div class="input-icon-wrap">
+                      <i class="fa-regular fa-id-card input-icon"></i>
+                      <input
+                        type="text"
+                        id="cardName"
+                        placeholder="As printed on card"
+                        autocomplete="cc-name"
+                      />
+                    </div>
+                  </label>
+
+                  <label class="booking-field">
+                    <span>Expiry date</span>
+                    <div class="input-icon-wrap">
+                      <i class="fa-regular fa-calendar input-icon"></i>
+                      <input
+                        type="text"
+                        id="expiry"
+                        inputmode="numeric"
+                        maxlength="5"
+                        placeholder="MM / YY"
+                        autocomplete="cc-exp"
+                      />
+                    </div>
+                    <small class="field-error" id="expiryError"></small>
+                  </label>
+
+                  <label class="booking-field">
+                    <span
+                      >CVV &nbsp;<span
+                        class="cvv-help"
+                        title="3-digit code on the back of your card"
+                        ><i class="fa-solid fa-circle-question"></i></span
+                    ></span>
+                    <div class="input-icon-wrap">
+                      <i class="fa-solid fa-lock input-icon"></i>
+                      <input
+                        type="password"
+                        id="cvv"
+                        inputmode="numeric"
+                        maxlength="4"
+                        placeholder="•••"
+                        autocomplete="cc-csc"
+                      />
+                    </div>
+                    <small class="field-error" id="cvvError"></small>
+                  </label>
+                </div>
+
+                <!-- Total payable -->
+                <div class="pay-total">
+                  <div>
+                    <span class="pay-total-label">Total payable</span>
+                    <div class="pay-total-route" id="payRoute">
+                      Flight booking
+                    </div>
+                  </div>
+                  <strong id="payTotal">$227</strong>
+                </div>
+
+                <button type="submit" class="checkout-primary">
+                  <i class="fa-solid fa-lock"></i> &nbsp;Pay Securely Now
+                </button>
+
+                <div class="secure-badges">
+                  <span class="secure-badge"
+                    ><i class="fa-solid fa-shield-halved"></i> 256-bit SSL</span
+                  >
+                  <span class="secure-badge"
+                    ><i class="fa-solid fa-circle-check"></i> PCI DSS</span
+                  >
+                  <span class="secure-badge"
+                    ><i class="fa-solid fa-lock"></i> Secure Checkout</span
+                  >
+                </div>
+              </form>
+            </div>
+
+            <!-- RIGHT — live card preview -->
+            <div class="payment-card-col">
+              <div class="card-preview-wrap">
+                <div class="card-preview" id="cardPreview">
+                  <!-- Front face -->
+                  <div class="card-face card-front">
+                    <div class="card-top-row">
+                      <div class="card-chip"></div>
+                      <span class="card-brand-logo"
+                        >Destination<br />Fareways</span
+                      >
+                    </div>
+                    <p class="card-number-display" id="cardDisplay">
+                      •••• &nbsp;•••• &nbsp;•••• &nbsp;••••
+                    </p>
+                    <div class="card-bottom-row">
+                      <div
+                        class="card-field-group"
+                        style="flex: 1; min-width: 0"
+                      >
+                        <div class="card-label">Card Holder</div>
+                        <div class="card-name-display" id="cardNameDisplay">
+                          YOUR NAME
+                        </div>
+                      </div>
+                      <div class="card-field-group">
+                        <div class="card-label">Expires</div>
+                        <div class="card-expiry-display" id="cardExpiryDisplay">
+                          MM/YY
+                        </div>
+                      </div>
+                      <div class="card-net-front" id="cardNetFront">
+                        <span class="card-net-circle"></span>
+                        <span class="card-net-circle"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Back face -->
+                  <div class="card-face card-back">
+                    <div class="card-mag-strip"></div>
+                    <div class="card-sig-row">
+                      <div class="card-sig-strip"></div>
+                      <div class="card-cvv-box" id="cardCvvDisplay">•••</div>
+                    </div>
+                    <p class="card-back-brand">
+                      Destination Fareways &nbsp;&middot;&nbsp; Secure Payment
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.payment-layout -->
+        </section>
+      </div>
+    </main>
+
+    <!-- ── Payment processing overlay ── -->
+    <div class="pay-overlay" id="payOverlay">
+      <div class="pay-overlay-card">
+        <div class="pay-spinner" id="paySpinner"></div>
+        <div class="pay-success-icon" id="paySuccessIcon">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 class="pay-overlay-title" id="payOverlayTitle">
+          Processing payment…
+        </h3>
+        <p class="pay-overlay-sub" id="payOverlaySub">
+          Please do not close this window.
+        </p>
+        <div class="pay-progress">
+          <div class="pay-progress-bar" id="payProgressBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ── Prefill total ── */
+      const fare = JSON.parse(
+        localStorage.getItem("dfCheckoutFare") ||
+          '{"total":227,"route":"Flight booking"}',
+      );
+      document.getElementById("payTotal").textContent =
+        "$" + (fare.total || 227);
+      document.getElementById("payRoute").textContent =
+        fare.route || "Flight booking";
+
+      /* ── Helpers ── */
+      function setError(id, msg) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = msg || "";
+      }
+
+      function animateIn(section) {
+        section.classList.remove("panel-fade-in");
+        void section.offsetWidth; /* reflow to restart */
+        section.classList.add("panel-fade-in");
+      }
+
+      /* ── Validators ── */
+      function validName(v) {
+        return /^[A-Za-z][A-Za-z\s'.,-]{1,}$/.test(v.trim());
+      }
+      function validPhone(v) {
+        return /^\d{10}$/.test(v.replace(/\D/g, ""));
+      }
+      function validEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+      }
+      function validExpiry(v) {
+        const m = v.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+        if (!m) return false;
+        return new Date(2000 + +m[2], +m[1], 0, 23, 59, 59) >= new Date();
+      }
+
+      /* ── Step indicator sync ── */
+      function setStep(step) {
+        document
+          .getElementById("stepTraveller")
+          .classList.toggle("active", step === 1);
+        document
+          .getElementById("stepPayment")
+          .classList.toggle("active", step === 2);
+      }
+
+      const mainEl = document.querySelector("main");
+
+      /* ── Back button ── */
+      function goBack() {
+        const pay = document.getElementById("paymentPanel");
+        const trav = document.getElementById("travellerPanel");
+        pay.hidden = true;
+        trav.hidden = false;
+        mainEl.classList.remove("payment-step");
+        animateIn(trav);
+        setStep(1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* ── Step 1: traveller submit ── */
+      document
+        .getElementById("travellerForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("fullName").value;
+          const phone = document.getElementById("phone").value;
+          const email = document.getElementById("email").value;
+          setError(
+            "nameError",
+            validName(name) ? "" : "Enter a valid full name.",
+          );
+          setError(
+            "phoneError",
+            validPhone(phone) ? "" : "Enter a valid 10-digit number.",
+          );
+          setError(
+            "emailError",
+            validEmail(email) ? "" : "Enter a valid email address.",
+          );
+          if (!validName(name) || !validPhone(phone) || !validEmail(email))
+            return;
+
+          localStorage.setItem(
+            "dfTraveller",
+            JSON.stringify({
+              name: name.trim(),
+              phone: phone.replace(/\D/g, ""),
+              email: email.trim(),
+            }),
+          );
+
+          document.getElementById("travellerPanel").hidden = true;
+          const pay = document.getElementById("paymentPanel");
+          pay.hidden = false;
+          mainEl.classList.add("payment-step");
+          animateIn(pay);
+          setStep(2);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+      /* ── Card network detection ── */
+      const netMap = [
+        { re: /^4/, name: "visa", label: "VISA", el: "netVisa" },
+        { re: /^5[1-5]/, name: "mc", label: "MC", el: "netMc" },
+        { re: /^3[47]/, name: "amex", label: "AMEX", el: "netAmex" },
+        { re: /^6(?:011|5)/, name: "discover", label: "DISC", el: "netDisc" },
+      ];
+
+      function setAllNetworks(active) {
+        netMap.forEach((n) => {
+          document
+            .getElementById(n.el)
+            .classList.toggle("active", !active || active === n.name);
+        });
+      }
+
+      /* ── Card number ── */
+      document.getElementById("cardNumber").addEventListener("input", (e) => {
+        const raw = e.target.value.replace(/\D/g, "").slice(0, 16);
+        e.target.value = raw.replace(/(.{4})/g, "$1 ").trim();
+        const parts = raw.padEnd(16, "•").match(/.{4}/g);
+        document.getElementById("cardDisplay").textContent = parts.join("  ");
+
+        const net = netMap.find((n) => n.re.test(raw));
+        const chip = document.getElementById("cardTypeChip");
+        if (net && raw.length > 0) {
+          chip.textContent = net.label;
+          chip.className = `card-type-chip show ${net.name}`;
+          setAllNetworks(net.name);
+        } else {
+          chip.className = "card-type-chip";
+          setAllNetworks(null);
+        }
+      });
+
+      /* ── Name on card ── */
+      document.getElementById("cardName").addEventListener("input", (e) => {
+        const val = e.target.value.trim().toUpperCase() || "YOUR NAME";
+        document.getElementById("cardNameDisplay").textContent = val.slice(
+          0,
+          22,
+        );
+      });
+
+      /* ── Expiry ── */
+      document.getElementById("expiry").addEventListener("input", (e) => {
+        const d = e.target.value.replace(/\D/g, "").slice(0, 4);
+        e.target.value = d.length > 2 ? d.slice(0, 2) + "/" + d.slice(2) : d;
+        document.getElementById("cardExpiryDisplay").textContent =
+          e.target.value || "MM/YY";
+      });
+
+      /* ── CVV — flip card ── */
+      const cvvInput = document.getElementById("cvv");
+      cvvInput.addEventListener("focus", () =>
+        document.getElementById("cardPreview").classList.add("flipped"),
+      );
+      cvvInput.addEventListener("blur", () =>
+        document.getElementById("cardPreview").classList.remove("flipped"),
+      );
+      cvvInput.addEventListener("input", (e) => {
+        document.getElementById("cardCvvDisplay").textContent =
+          "•".repeat(Math.min(e.target.value.length, 4)) || "•••";
+      });
+
+      /* ── Step 2: payment submit + overlay ── */
+      document.getElementById("paymentForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const card = document
+          .getElementById("cardNumber")
+          .value.replace(/\D/g, "");
+        const expiry = document.getElementById("expiry").value;
+        const cvv = document.getElementById("cvv").value;
+        const cardOk = /^\d{16}$/.test(card);
+        const expiryOk = validExpiry(expiry);
+        const cvvOk = /^\d{3,4}$/.test(cvv);
+        setError(
+          "cardError",
+          cardOk ? "" : "Enter a valid 16-digit card number.",
+        );
+        setError(
+          "expiryError",
+          expiryOk ? "" : "Enter a valid future expiry (MM/YY).",
+        );
+        setError("cvvError", cvvOk ? "" : "Enter a valid 3 or 4 digit CVV.");
+        if (!cardOk || !expiryOk || !cvvOk) return;
+
+        /* show overlay */
+        const overlay = document.getElementById("payOverlay");
+        const bar = document.getElementById("payProgressBar");
+        const title = document.getElementById("payOverlayTitle");
+        const sub = document.getElementById("payOverlaySub");
+        overlay.classList.add("active");
+        requestAnimationFrame(() => {
+          bar.style.width = "100%";
+        });
+
+        /* step messages */
+        [
+          {
+            t: 500,
+            h: "Verifying card details…",
+            s: "Connecting to secure gateway.",
+          },
+          {
+            t: 1300,
+            h: "Authenticating payment…",
+            s: "Your bank is approving the transaction.",
+          },
+          { t: 2100, h: "Confirming your booking…", s: "Almost done!" },
+        ].forEach(({ t, h, s }) =>
+          setTimeout(() => {
+            title.textContent = h;
+            sub.textContent = s;
+          }, t),
+        );
+
+        /* success → redirect */
+        setTimeout(() => {
+          overlay.classList.add("success");
+          title.textContent = "Payment successful!";
+          sub.textContent = "Your booking is confirmed.";
+          localStorage.setItem(
+            "dfBookingRef",
+            "DF" + Date.now().toString().slice(-8),
+          );
+          setTimeout(() => {
+            window.location.href = "confirmation.html";
+          }, 1100);
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
